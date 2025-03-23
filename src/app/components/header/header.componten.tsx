@@ -1,4 +1,5 @@
 'use client';
+
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import styles from './header.module.css';

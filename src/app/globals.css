@@ -16,20 +16,18 @@
   --accent: var(--bule-strong);
   --primary-gray: var(--gray-ligth);
   --primary-blue: var(--bule-light);
-  --secundary-blue: rgba(
-    red(var(--primary-blue)),
-    green(var(--primary-blue)),
-    blue(var(--primary-blue)),
-    0.3);
-  --secundary-gray: rgba(
-    red(var(--primary-gray)),
-    green(var(--primary-gray)),
-    blue(var(--primary-gray)),
-    0.3);
+  --secundary-blue: rgba(red(var(--primary-blue)),
+      green(var(--primary-blue)),
+      blue(var(--primary-blue)),
+      0.3);
+  --secundary-gray: rgba(red(var(--primary-gray)),
+      green(var(--primary-gray)),
+      blue(var(--primary-gray)),
+      0.3);
 }
 
 .dark-theme {
-  --blue-dark: rgb(0,20,200);
+  --blue-dark: rgb(0, 20, 200);
   --gray-dark: rgb(30, 30, 30);
 
   --background: var(--black);

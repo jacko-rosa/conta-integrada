@@ -1,6 +1,7 @@
+'use client'
 
-export default function Home() {
-    return (
-      <p> Register page </p>
-    );
-  }
+export default function RegisterPage() {
+  return (
+    <p> Register page </p>
+  );
+}

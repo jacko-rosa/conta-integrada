@@ -1,24 +1,12 @@
 'use client'
+
+import { ImagesArguments } from '@/utils/images';
 import { Routes } from '@/utils/routes';
 import Image from 'next/image';
 import { redirect } from "next/navigation";
 import styles from './home.module.css';
 
 export function HomeComponent() {
-    const altImgOverView = `Ilustração minimalista de um sistema de controle financeiro com cores suaves de verde e 
-    azul. Elementos incluem uma planilha com categorias de renda e despesas, um gráfico de balanço, um bloco de notas 
-    com um lápis e um painel de controle financeiro digital com gráficos e tabelas.`
-    const srcImgOverView = `/unnamed2.png`;
-
-    function OnClickLogin() {
-        
-        redirect(Routes.HOME.LOGIN.href)
-    }
-
-    function OnClickRegister() {
-
-    }
-
     return (
         <div className={styles.homeComponent}>
             <div className={styles.main}>
@@ -37,7 +25,7 @@ export function HomeComponent() {
                     </div>
                 </section>
                 <div className={styles.overviewImage}>
-                    <Image src={srcImgOverView} alt={altImgOverView} fill={true} />
+                    <Image src={ImagesArguments.planejamento_inanceiro.src} alt={ImagesArguments.planejamento_inanceiro.alt} fill={true} />
                 </div>
             </div>
         </div>
