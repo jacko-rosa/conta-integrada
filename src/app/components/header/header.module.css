@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vw auto;
+  margin: 1vw ;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border-radius: 1vw;
+  height: 10vh;
+}
+
+.light_theme {
+  color: var(--black);
+}
+
+.dark_theme {
+  color: var(--white);
+}
+
+.themeToggle {
+  padding-right: 1vh;
+  height: 4vh;
+  width: 4vh;
+  cursor: pointer;
+}
