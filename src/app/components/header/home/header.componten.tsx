@@ -3,6 +3,8 @@
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import styles from './header.module.css';
+import Link from 'next/link';
+import { Routes } from '@/utils/routes';
 
 export function HeaderComponent() {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -36,7 +38,9 @@ export function HeaderComponent() {
 
     return (
         <header className={styles.header}>
-            <h1 className={styles.logo}>Conta Integrada</h1>
+            <Link href={Routes.HOME.MAIN.href} className={styles.logo}>
+                <h1>Conta Integrada</h1>
+            </Link> 
             {defineIcon()}
         </header>
     );

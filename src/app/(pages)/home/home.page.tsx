@@ -1,6 +1,6 @@
 'use client'
 
-import { HeaderComponent } from '../../components/header/header.componten';
+import { HeaderComponent } from '../../components/header/home/header.componten';
 import { HomeComponent } from '../../components/home/home.component';
 
 export function HomePage() {

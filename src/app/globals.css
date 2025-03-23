@@ -14,16 +14,10 @@
   --background: var(--white);
   --foreground: var(--black);
   --accent: var(--bule-strong);
-  --primary-gray: var(--gray-ligth);
+  --primary-gray: var(--gray-light);
   --primary-blue: var(--bule-light);
-  --secundary-blue: rgba(red(var(--primary-blue)),
-      green(var(--primary-blue)),
-      blue(var(--primary-blue)),
-      0.3);
-  --secundary-gray: rgba(red(var(--primary-gray)),
-      green(var(--primary-gray)),
-      blue(var(--primary-gray)),
-      0.3);
+  --secundary-blue: rgba(0, 110, 250, 0.3);
+  --secundary-gray: rgba(230, 230, 230, 0.3);
 }
 
 .dark-theme {
@@ -35,6 +29,8 @@
   --accent: var(--bule-strong);
   --primary-gray: var(--gray-dark);
   --primary-blue: var(--blue-dark);
+  --secundary-blue: rgba(0, 20, 200, 0.3);
+  --secundary-gray: rgba(30, 30, 30, 0.3);
 }
 
 body {
@@ -45,10 +41,6 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-}
-
-.dark-theme a {
-  color: var(--primary-blue);
 }
 
 .accent-element {

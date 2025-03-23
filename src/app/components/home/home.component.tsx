@@ -5,6 +5,7 @@ import { Routes } from '@/utils/routes';
 import Image from 'next/image';
 import { redirect } from "next/navigation";
 import styles from './home.module.css';
+import { Button } from '@mui/material';
 
 export function HomeComponent() {
     return (
@@ -20,8 +21,8 @@ export function HomeComponent() {
                         </div>
                     </div>
                     <div className={styles.buttons}>
-                        <button onClick={() => redirect(Routes.HOME.LOGIN.href)}> Login</button>
-                        <button onClick={() => redirect(Routes.HOME.REGISTER.href)}> register</button>
+                        <Button onClick={() => redirect(Routes.HOME.LOGIN.href)} variant="contained" color="secondary"> Login</Button>
+                        <Button onClick={() => redirect(Routes.HOME.REGISTER.href)} variant="contained" color="primary"> register</Button>
                     </div>
                 </section>
                 <div className={styles.overviewImage}>
