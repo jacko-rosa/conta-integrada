@@ -4,8 +4,8 @@ import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
 import { Box, Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import style from './register-form.module.css';
 import { JSX } from 'react';
+import style from './register-form.module.css';
 
 export const SignUpFormArguments = [
     { label: 'Name', name: 'name', type: 'text', placeHolder: 'Type your Name' },
@@ -16,7 +16,7 @@ export const SignUpFormArguments = [
     { label: 'Confirm Password', name: 'password2', type: 'password', placeHolder: 'Retype your Password', hide: true },
 ];
 
-export default function RegisterForm({children}:{children:JSX.Element}) {
+export default function RegisterForm({ children }: { children: JSX.Element }) {
     const router = useRouter();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

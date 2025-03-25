@@ -1,10 +1,10 @@
 'use client';
 
+import { Routes } from '@/utils/routes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from './header.module.css';
-import Link from 'next/link';
-import { Routes } from '@/utils/routes';
 
 export function HeaderComponent() {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -40,7 +40,7 @@ export function HeaderComponent() {
         <header className={styles.header}>
             <Link href={Routes.HOME.MAIN.href} className={styles.logo}>
                 <h1>Conta Integrada</h1>
-            </Link> 
+            </Link>
             {defineIcon()}
         </header>
     );

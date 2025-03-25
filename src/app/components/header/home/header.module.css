@@ -11,14 +11,14 @@
 }
 
 .logo {
- text-decoration: none; 
- margin: inherit;
- color: var(--white);
+  text-decoration: none;
+  margin: inherit;
+  color: var(--white);
 }
 
 .logo:hover {
-  text-decoration: none; 
- }
+  text-decoration: none;
+}
 
 .light_theme {
   color: var(--black);
