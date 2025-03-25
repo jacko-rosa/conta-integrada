@@ -50,7 +50,7 @@ function inputsFromArguments() {
                 label={field.label}
                 name={field.name}
                 type={field.type}
-                className={style.textField} // Aplica a classe CSS
+                className={style.textField}
             />
         );
     });
