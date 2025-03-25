@@ -6,9 +6,10 @@ import RegisterForm from '@/app/components/home/register/register-form.component
 export default function SignUpPage() {
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-        <HeaderComponent />
-        <RegisterForm />
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '40vw'}}>
+        <RegisterForm>
+          <HeaderComponent />
+        </RegisterForm>
       </div>
     </>
   );

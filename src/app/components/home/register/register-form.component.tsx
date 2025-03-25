@@ -5,6 +5,7 @@ import { Routes } from '@/utils/routes';
 import { Box, Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import style from './register-form.module.css';
+import { JSX } from 'react';
 
 export const SignUpFormArguments = [
     { label: 'Name', name: 'name', type: 'text', placeHolder: 'Type your Name' },
@@ -15,7 +16,7 @@ export const SignUpFormArguments = [
     { label: 'Confirm Password', name: 'password2', type: 'password', placeHolder: 'Retype your Password', hide: true },
 ];
 
-export default function RegisterForm() {
+export default function RegisterForm({children}:{children:JSX.Element}) {
     const router = useRouter();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -32,7 +33,7 @@ export default function RegisterForm() {
 
     return (
         <Box component="form" onSubmit={handleSubmit} className={style.registerForm} >
-            <h1 className={style.title}>Please fill the blanks to register.</h1>
+            {children}
             {inputsFromArguments()}
             <Button type="submit" variant="contained" style={{ marginTop: '16px' }}>
                 Register

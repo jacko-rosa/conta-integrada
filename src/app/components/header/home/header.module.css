@@ -2,12 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1vw auto;
-  margin: 1vw;
   background-color: var(--primary-blue);
   color: var(--white);
   border-radius: 1vw;
-  height: 10vh;
+  min-height: 10vh;
+  width: 100%;
+  padding: 1vw;
 }
 
 .logo {
