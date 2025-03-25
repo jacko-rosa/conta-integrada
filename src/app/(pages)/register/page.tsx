@@ -1,7 +1,15 @@
 'use client'
 
-export default function RegisterPage() {
+import { HeaderComponent } from '@/app/components/header/home/header.componten';
+import RegisterForm from '@/app/components/home/register/register-form.component';
+
+export default function SignUpPage() {
   return (
-    <p> Register page </p>
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+        <HeaderComponent />
+        <RegisterForm />
+      </div>
+    </>
   );
-}
+};

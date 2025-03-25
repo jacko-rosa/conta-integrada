@@ -1,0 +1,31 @@
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    padding: 2vw;
+    background-Color: var(--primary-gray);
+    border-Radius: 1vh;
+    color: var(--foreground);
+}
+
+.title {
+    color: var(--foreground);
+}
+
+.textField div {
+    margin-top: 1vh;
+    border-radius: 0.5vh;
+}
+
+.textField fieldset:hover {
+    border: 1px solid blue;
+}
+
+.textField input {
+    padding-top: 0;
+    color: var(--foregrounds);
+}
+
+
+.textField label {
+    color: var(--foreground);
+}
