@@ -27,8 +27,8 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
         event.preventDefault();
         try {
             const dto = UserMapper.formToDto(new FormData(event.currentTarget));
-            const response = await signUp(dto);
-            console.log('Sign-up response:', response); // TODO set on cookies/storage
+            const token = await signUp(dto);
+            localStorage.setItem('userToken', token);
             router.push(Routes.DASBOARD.MAIN.href);
         } catch (error) {
             // TODO show toast error
