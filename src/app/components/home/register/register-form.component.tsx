@@ -1,5 +1,6 @@
 'use client';
 
+import { UserMapper } from '@/mappers/user.mapper';
 import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
 import { Box, Button, TextField } from '@mui/material';
@@ -15,8 +16,8 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         try {
-            const formData = new FormData(event.currentTarget);
-            const response = await signUp(formData);
+            const dto = UserMapper.formToDto(new FormData(event.currentTarget));
+            const response = await signUp(dto);
             console.log('Sign-up response:', response); // TODO set on cookies/storage
             router.push(Routes.DASBOARD.MAIN.href);
         } catch (error) {

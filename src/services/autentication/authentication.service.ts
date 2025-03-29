@@ -1,36 +1,37 @@
 'use server'
 
 import { UserDto } from "@/definitions/user.definition";
-import { buildObjectsFromFormData, logEnd, logInit } from "@/utils/util";
+import { UserMapper } from "@/mappers/user.mapper";
+import { createUserSql } from "@/repositories/user.repository";
+import { logEnd, logInit, throwError } from "@/utils/util";
+import crypto from 'crypto';
 
-const CLAZZ = 'AuthenticationService'
+const CLAZZ = 'AuthenticationService';
 
-const inputsForm = {
-    name: 'name',
-    lastName: 'lastName',
-    email: 'email',
-    document: 'document',
-    password: 'password',
+async function hashPassword(password: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const salt = crypto.randomBytes(10).toString('hex');
+        crypto.scrypt(password, salt, 30, (err, hash) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(hash.toString('hex'));
+        });
+    });
 }
 
-export async function signUp(form: FormData): Promise<UserDto> {
+export async function signUp(dto: UserDto): Promise<UserDto> {
     const METHOD = 'signUp';
-    logInit(CLAZZ, METHOD, buildObjectsFromFormData([inputsForm.name, inputsForm.lastName, inputsForm.email, inputsForm.document], form))
-
-    const name = form.get(inputsForm.name);
-    const lastName = form.get(inputsForm.lastName);
-    const email = form.get(inputsForm.email)
-    const document = form.get(inputsForm.document);
-    const password = form.get(inputsForm.password);
-
-    const response = {
-        name,
-        lastName,
-        email,
-        document,
-        password
-    } as UserDto
-
-    logEnd(CLAZZ, METHOD, response)
-    return Promise.resolve(response);
+    try {
+        logInit(CLAZZ, METHOD, dto);
+        //todo validation        
+        dto.password = await hashPassword(dto.password);
+        const domain = UserMapper.dtoToDomain(dto);
+        const response = await createUserSql(domain);
+        dto.id = response.id;
+        logEnd(CLAZZ, METHOD, response);
+        return dto;
+    } catch (error) {
+        return throwError(error as Error, CLAZZ, METHOD)
+    }
 }
