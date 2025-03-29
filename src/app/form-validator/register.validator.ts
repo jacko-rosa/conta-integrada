@@ -1,6 +1,14 @@
 import { maxLenth, minLenth, mustContainAtLeastOne, required, typeInvalid } from "./util.validator";
 
 
+function validateFormSignIn(name: string, value: string, label: string, currentErrors: { [key: string]: string }): { [key: string]: string } {
+    const errors = { ...currentErrors };
+    requiredValidation(value, errors, name, label);
+    documentValidation(value, errors, name, label);
+    passwordValidation(value, errors, name, label);
+    return errors;
+}
+
 function validateFormSignUp(name: string, value: string, label: string, currentErrors: { [key: string]: string }): { [key: string]: string } {
     const errors = { ...currentErrors };
     requiredValidation(value, errors, name, label);
@@ -146,5 +154,6 @@ function passwordValidation(value: string, errors: { [key: string]: string; }, n
 }
 
 export const RegisterValidation = {
-    validateFormSignUp
+    validateFormSignUp,
+    validateFormSignIn
 }

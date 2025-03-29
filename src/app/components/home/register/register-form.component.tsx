@@ -4,7 +4,7 @@ import { RegisterValidation } from '@/app/form-validator/register.validator';
 import { UserMapper } from '@/mappers/user.mapper';
 import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, Link, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { JSX, useState } from 'react';
 import style from './register-form.module.css';
@@ -15,7 +15,6 @@ const defaultValue = {
     document: '',
     email: '',
     password: '',
-    confirmPassword: '',
 }
 
 export default function RegisterForm({ children }: { children: JSX.Element }) {
@@ -28,7 +27,7 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
         try {
             const dto = UserMapper.formToDto(new FormData(event.currentTarget));
             const token = await signUp(dto);
-            localStorage.setItem('userToken', token);
+            sessionStorage.setItem('userToken', token);
             router.push(Routes.DASBOARD.MAIN.href);
         } catch (error) {
             // TODO show toast error
@@ -46,7 +45,7 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
     }
 
     function disableSubmit(): boolean {
-        return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 6;
+        return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 5;
     }
 
     return (
@@ -109,20 +108,12 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
                 helperText={formErrors['password']}
             />
 
-            <TextField label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-                placeholder="Retype your Password"
-                className={style.textField}
-                value={formValues['confirmPassword']}
-                onChange={(e) => handleInputChange(e, 'Confirm Password')}
-                error={!!formErrors['confirmPassword']}
-                helperText={formErrors['confirmPassword']}
-            />
-
-            <Button type="submit" variant="contained" style={{ marginTop: '16px' }} disabled={disableSubmit()}>
+            <Button type="submit" variant="contained" style={{ marginTop: '2vh' }} disabled={disableSubmit()}>
                 Register
             </Button>
+            <Link href={Routes.HOME.LOGIN.href}>
+                Has an account, so <strong>login</strong>
+            </Link>
         </Box>
     );
 }

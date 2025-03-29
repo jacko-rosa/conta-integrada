@@ -1,7 +1,16 @@
 'use client'
 
-export default function LoginPage() {
+import { HeaderComponent } from '@/app/components/header/home/header.componten';
+import LoginForm from '@/app/components/home/login/sign-in.component';
+
+export default function SignUpPage() {
   return (
-    <p> login page </p>
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '40vw' }}>
+        <LoginForm>
+          <HeaderComponent />
+        </LoginForm>
+      </div>
+    </>
   );
-}
+};
