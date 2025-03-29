@@ -10,8 +10,16 @@ import style from './register-form.module.css';
 
 export default function RegisterForm({ children }: { children: JSX.Element }) {
     const router = useRouter();
-    const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
+    const [formValues, setFormValues] = useState<{ [key: string]: string }>({
+        name: '',
+        lastName: '',
+        document: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
+
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
