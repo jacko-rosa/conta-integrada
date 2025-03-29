@@ -1,5 +1,6 @@
 'use client';
 
+import { RegisterValidation } from '@/app/form-validator/register.validator';
 import { UserMapper } from '@/mappers/user.mapper';
 import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
@@ -8,18 +9,19 @@ import { useRouter } from 'next/navigation';
 import { JSX, useState } from 'react';
 import style from './register-form.module.css';
 
+const defaultValue = {
+    name: '',
+    lastName: '',
+    document: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+}
+
 export default function RegisterForm({ children }: { children: JSX.Element }) {
     const router = useRouter();
-    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-    const [formValues, setFormValues] = useState<{ [key: string]: string }>({
-        name: '',
-        lastName: '',
-        document: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-    });
-
+    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>(defaultValue);
+    const [formValues, setFormValues] = useState<{ [key: string]: string }>(defaultValue);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -34,24 +36,17 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
         }
     }
 
-    function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, label: string): void {
+    async function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, label: string) {
         const { name, value } = event.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
-        validateForm(name, value, label);
-    }
-
-    function validateForm(name: string, value: string, label: string): void {
-        const errors: { [key: string]: string } = { ...formErrors };
-        if (!value) {
-            errors[name] = `${label} is required`;
-        } else {
-            delete errors[name];
-        }
+        setFormErrors((prev) => ({ ...prev, [name]: '' }));
+        const errors = RegisterValidation.validateFormSignUp(name, value, label, formErrors);
         setFormErrors(errors);
+
     }
 
     function disableSubmit(): boolean {
-        return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 6
+        return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 6;
     }
 
     return (
