@@ -1,6 +1,6 @@
 'use client';
 
-import { RegisterValidation } from '@/app/form-validator/register.validator';
+import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
 import { UserMapper } from '@/mappers/user.mapper';
 import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
@@ -39,7 +39,7 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
         const { name, value } = event.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
         setFormErrors((prev) => ({ ...prev, [name]: '' }));
-        const errors = RegisterValidation.validateFormSignUp(name, value, label, formErrors);
+        const errors = AuthorizationValidation.validateFormSignUp(name, value, label, formErrors);
         setFormErrors(errors);
 
     }

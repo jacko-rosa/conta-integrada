@@ -24,3 +24,23 @@ export async function createUserSql(user: UserDomain): Promise<UserDomain> {
         return throwError(error as Error, CLAZZ, METHOD)
     }
 }
+
+export async function getUserSqlByDocument(document: string): Promise<UserDomain> {
+    const METHOD = 'getUserSqlByDocument';
+    try {
+        logInit(CLAZZ, METHOD, { document });
+        const connection = await db.connect();
+        const data = await connection.sql<UserDomain>`
+            SELECT *
+            FROM "user"
+            WHERE 1=1
+                AND document = ${document}
+            ;`;
+
+        const response = data.rows[0];
+        logEnd(CLAZZ, METHOD, response)
+        return response;
+    } catch (error) {
+        return throwError(error as Error, CLAZZ, METHOD)
+    }
+}

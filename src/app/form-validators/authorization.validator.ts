@@ -5,7 +5,6 @@ function validateFormSignIn(name: string, value: string, label: string, currentE
     const errors = { ...currentErrors };
     requiredValidation(value, errors, name, label);
     documentValidation(value, errors, name, label);
-    passwordValidation(value, errors, name, label);
     return errors;
 }
 
@@ -153,7 +152,7 @@ function passwordValidation(value: string, errors: { [key: string]: string; }, n
 
 }
 
-export const RegisterValidation = {
+export const AuthorizationValidation = {
     validateFormSignUp,
     validateFormSignIn
 }

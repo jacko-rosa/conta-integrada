@@ -1,8 +1,8 @@
 'use client';
 
-import { RegisterValidation } from '@/app/form-validator/register.validator';
+import { Endpoints } from '@/app/api/endpoints';
+import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
 import { UserMapper } from '@/mappers/user.mapper';
-import { loginUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
 import { Box, Button, Link, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -18,17 +18,30 @@ export default function LoginForm({ children }: { children: JSX.Element }) {
     const router = useRouter();
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>(defaultValue);
     const [formValues, setFormValues] = useState<{ [key: string]: string }>(defaultValue);
+    const [apiError, setApiError] = useState<string | null>(null);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setApiError(null);
         try {
             const dto = UserMapper.formToDto(new FormData(event.currentTarget));
-            const token = await loginUp(dto);
-            sessionStorage.setItem('userToken', token);
+            const response = await fetch(Endpoints.authentication.login, {
+                method: 'POST',
+                body: JSON.stringify(dto),
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw { status: response.status, message: errorData.message };
+            }
+            const data = await response.json();
+            sessionStorage.setItem('userToken', data.token);
             router.push(Routes.DASBOARD.MAIN.href);
-        } catch (error) {
-            // TODO show toast error
-            console.error('Error during sign-up:', error);
+        } catch (error: any) {
+            if (error.status === 401) {
+                setApiError('Credenciais inválidas. Por favor, verifique seu documento e senha.');
+            } else {
+                setApiError('Erro ao fazer login. Por favor, tente novamente.');
+            }
         }
     }
 
@@ -36,7 +49,7 @@ export default function LoginForm({ children }: { children: JSX.Element }) {
         const { name, value } = event.target;
         setFormValues((prev) => ({ ...prev, [name]: value }));
         setFormErrors((prev) => ({ ...prev, [name]: '' }));
-        const errors = RegisterValidation.validateFormSignIn(name, value, label, formErrors);
+        const errors = AuthorizationValidation.validateFormSignIn(name, value, label, formErrors);
         setFormErrors(errors);
 
     }
@@ -49,8 +62,11 @@ export default function LoginForm({ children }: { children: JSX.Element }) {
         <Box component="form" onSubmit={handleSubmit} className={style.loginForm}>
             {children}
 
-            <TextField
-                label="Document (CPF/CNPJ)"
+            {apiError && <p style={{ color: 'red', margin: '1vh' }}>
+                {apiError}
+            </p>}
+            
+            <TextField label="Document (CPF/CNPJ)"
                 name="document"
                 type="text"
                 placeholder="Type your CPF/CNPJ"
@@ -75,6 +91,7 @@ export default function LoginForm({ children }: { children: JSX.Element }) {
             <Button type="submit" variant="contained" style={{ marginTop: '16px' }} disabled={disableSubmit()}>
                 Login
             </Button>
+
             <Link href={Routes.HOME.REGISTER.href}>
                 Do not have an account, so <strong>register</strong>
             </Link>

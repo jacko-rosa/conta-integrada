@@ -2,7 +2,7 @@
 
 import { UserDto } from "@/definitions/user.definition";
 import { UserMapper } from "@/mappers/user.mapper";
-import { createUserSql } from "@/repositories/user.repository";
+import { createUserSql, getUserSqlByDocument } from "@/repositories/user.repository";
 import { logEnd, logInit } from "@/utils/util";
 
 const CLAZZ = 'UserService';
@@ -16,4 +16,14 @@ export async function createUser(dto: UserDto): Promise<UserDto> {
     dto.id = response.id;
     logEnd(CLAZZ, METHOD, response);
     return dto;
+}
+
+export async function getUserByDocument(document: string): Promise<UserDto> {
+    const METHOD = 'getUserByDocument';
+    logInit(CLAZZ, METHOD, { document });
+    // todo validation
+    const domain = await getUserSqlByDocument(document);
+    const response = UserMapper.domainToDto(domain);
+    logEnd(CLAZZ, METHOD, response);
+    return response;
 }

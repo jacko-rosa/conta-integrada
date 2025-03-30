@@ -1,17 +1,14 @@
 import { UserDomain, UserDto } from "@/definitions/user.definition";
-import { logEnd, logInit } from "@/utils/util";
 import SHA256 from 'crypto-js/sha256';
 
 const CLAZZ = 'UserMapper';
 
 function formToDto(form: FormData): UserDto {
-    const METHOD = 'formDataToUserDto';
-    logInit(CLAZZ, METHOD);
-    const name = String(form.get('name')!);
-    const lastName = String(form.get('lastName')!);
-    const email = String(form.get('email')!);
-    const document = String(form.get('document')!);
-    const password = String(form.get('password')!);
+    const name = String(form.get('name') || null);
+    const lastName = String(form.get('lastName') || null);
+    const email = String(form.get('email') || null);
+    const document = String(form.get('document') || null);
+    const password = String(form.get('password') || null);
 
     const hashedPassword = SHA256(password).toString();
     const dto: UserDto = {
@@ -21,13 +18,10 @@ function formToDto(form: FormData): UserDto {
         document,
         password: hashedPassword
     };
-    logEnd(CLAZZ, METHOD);
     return dto;
 }
 
 function dtoToDomain(dto: UserDto): UserDomain {
-    const METHOD = 'dtoToDomain';
-    logInit(CLAZZ, METHOD);
     const domain = {
         name: dto.name,
         last_name: dto.lastName,
@@ -36,11 +30,23 @@ function dtoToDomain(dto: UserDto): UserDomain {
         password: dto.password,
         id: dto.id
     } as UserDomain;
-    logEnd(CLAZZ, METHOD);
     return domain;
+}
+
+function domainToDto(domain: UserDomain): UserDto {
+    const dto = {
+        name: domain.name,
+        lastName: domain.last_name,
+        email: domain.email,
+        document: domain.document,
+        password: domain.password,
+        id: domain.id
+    } as UserDto;
+    return dto;
 }
 
 export const UserMapper = {
     formToDto,
-    dtoToDomain
+    dtoToDomain,
+    domainToDto
 }
