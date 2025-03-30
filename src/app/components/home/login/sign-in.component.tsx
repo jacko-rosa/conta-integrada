@@ -15,7 +15,7 @@ interface LoginFormProps {
     disableLogin: () => boolean;
 }
 
-export default function LoginForm({
+export function LoginForm({
     children,
     formValues,
     formErrors,
@@ -56,7 +56,7 @@ export default function LoginForm({
                 helperText={formErrors['password']}
             />
 
-            <Button type="submit" variant="contained" style={{ marginTop: '16px' }} disabled={disableLogin()}>
+            <Button type="submit" variant="contained" style={{ marginTop: '2vh' }} disabled={disableLogin()}>
                 Login
             </Button>
 

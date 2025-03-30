@@ -1,61 +1,44 @@
 'use client';
 
-import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
-import { UserMapper } from '@/mappers/user.mapper';
-import { signUp } from '@/services/autentication/authentication.service';
 import { Routes } from '@/utils/routes';
 import { Box, Button, Link, TextField } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import { JSX, useState } from 'react';
+import { JSX } from 'react';
 import style from './register-form.module.css';
 
-const defaultValue = {
-    name: '',
-    lastName: '',
-    document: '',
-    email: '',
-    password: '',
+interface RegisterFormProps {
+    children: JSX.Element;
+    formValues: { [key: string]: string };
+    formErrors: { [key: string]: string };
+    apiError: string | null;
+    handleInputChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, label: string) => void;
+    handleRegister: (event: React.FormEvent<HTMLFormElement>) => void;
+    disableRegister: () => boolean;
 }
 
-export default function RegisterForm({ children }: { children: JSX.Element }) {
-    const router = useRouter();
-    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>(defaultValue);
-    const [formValues, setFormValues] = useState<{ [key: string]: string }>(defaultValue);
+export function RegisterForm({
+    children,
+    formValues,
+    formErrors,
+    apiError,
+    handleInputChange,
+    handleRegister,
+    disableRegister,
+}: RegisterFormProps) {
 
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        try {
-            const dto = UserMapper.formToDto(new FormData(event.currentTarget));
-            const token = await signUp(dto);
-            sessionStorage.setItem('userToken', token);
-            router.push(Routes.DASBOARD.MAIN.href);
-        } catch (error) {
-            // TODO show toast error
-            console.error('Error during sign-up:', error);
-        }
-    }
-
-    async function handleInputChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, label: string) {
-        const { name, value } = event.target;
-        setFormValues((prev) => ({ ...prev, [name]: value }));
-        setFormErrors((prev) => ({ ...prev, [name]: '' }));
-        const errors = AuthorizationValidation.validateFormSignUp(name, value, label, formErrors);
-        setFormErrors(errors);
-
-    }
-
-    function disableSubmit(): boolean {
-        return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 5;
+        handleRegister(event);
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit} className={style.registerForm}>
+        <Box component="form" onSubmit={handleSubmit} method='POST' className={style.loginForm}>
             {children}
+
+            {apiError && <p style={{ color: 'red', margin: '1vh' }}>{apiError}</p>}
 
             <TextField label="Name"
                 name="name"
                 type="text"
-                placeholder="Type your Name"
                 className={style.textField}
                 value={formValues['name']}
                 onChange={(e) => handleInputChange(e, 'Name')}
@@ -66,7 +49,6 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
             <TextField label="Last Name"
                 name="lastName"
                 type="text"
-                placeholder="Type your Last Name"
                 className={style.textField}
                 value={formValues['lastName']}
                 onChange={(e) => handleInputChange(e, 'Last Name')}
@@ -78,7 +60,6 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
                 label="Document (CPF/CNPJ)"
                 name="document"
                 type="text"
-                placeholder="Type your CPF/CNPJ"
                 className={style.textField}
                 value={formValues['document']}
                 onChange={(e) => handleInputChange(e, 'Document (CPF/CNPJ)')}
@@ -89,7 +70,6 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
             <TextField label="Email"
                 name="email"
                 type="text"
-                placeholder="Type your Email"
                 className={style.textField}
                 value={formValues['email']}
                 onChange={(e) => handleInputChange(e, 'Email')}
@@ -100,7 +80,6 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
             <TextField label="Password"
                 name="password"
                 type="password"
-                placeholder="Type your Password"
                 className={style.textField}
                 value={formValues['password']}
                 onChange={(e) => handleInputChange(e, 'Password')}
@@ -108,7 +87,7 @@ export default function RegisterForm({ children }: { children: JSX.Element }) {
                 helperText={formErrors['password']}
             />
 
-            <Button type="submit" variant="contained" style={{ marginTop: '2vh' }} disabled={disableSubmit()}>
+            <Button type="submit" variant="contained" style={{ marginTop: '2vh' }} disabled={disableRegister()}>
                 Register
             </Button>
             <Link href={Routes.HOME.LOGIN.href}>

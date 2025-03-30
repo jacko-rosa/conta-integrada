@@ -1,9 +1,9 @@
 'use client';
 
 import { HeaderComponent } from '@/app/components/header/home/header.componten';
-import LoginForm from '@/app/components/home/login/sign-in.component';
+import { LoginForm } from '@/app/components/home/login/sign-in.component';
 import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
-import { loginService } from '@/app/web-services/home/login.web-service';
+import { loginService } from '@/app/web-services/home/authentication.web-service';
 import { UserMapper } from '@/mappers/user.mapper';
 import { Routes } from '@/utils/routes';
 import { useRouter } from 'next/navigation';
@@ -46,7 +46,7 @@ export default function LoginPage() {
   }
 
   function disableLogin(): boolean {
-    return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < 2 || isSubmitting;
+    return Object.keys(formErrors).length > 0 || Object.keys(formValues).length < Object.keys(defaultValue).length || isSubmitting;
   }
 
   return (
