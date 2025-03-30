@@ -1,8 +1,6 @@
 import { UserDomain, UserDto } from "@/definitions/user.definition";
 import SHA256 from 'crypto-js/sha256';
 
-const CLAZZ = 'UserMapper';
-
 function formToDto(form: FormData): UserDto {
     const name = String(form.get('name') || null);
     const lastName = String(form.get('lastName') || null);
