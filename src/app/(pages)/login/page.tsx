@@ -29,10 +29,15 @@ export default function LoginPage() {
       const dto = UserMapper.formToDto(form);
       await loginService(dto);
       router.push(Routes.DASBOARD.MAIN.href);
-    } catch (error: any) {
-      setApiError(error.message);
+    } catch (error: unknown) {
+      setIsSubmitting(false);
+      if (error instanceof Error) {
+        setApiError(error.message);
+      } else {
+        setApiError('Unespected error');
+      }
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
@@ -52,14 +57,15 @@ export default function LoginPage() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '40vw' }}>
       <LoginForm
-        children={<HeaderComponent />}
         formValues={formValues}
         formErrors={formErrors}
         apiError={apiError}
         handleInputChange={handleInputChange}
         handleLogin={login}
         disableLogin={disableLogin}
-      />
+      >
+        <HeaderComponent />
+      </LoginForm>
     </div>
   );
 }

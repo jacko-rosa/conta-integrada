@@ -6,7 +6,7 @@ import { AuthorizationValidation } from '@/app/form-validators/authorization.val
 import { registerService } from '@/app/web-services/home/authentication.web-service';
 import { UserMapper } from '@/mappers/user.mapper';
 import { Routes } from '@/utils/routes';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const defaultValue = {
@@ -32,10 +32,15 @@ export default function SignUpPage() {
       const dto = UserMapper.formToDto(form);
       await registerService(dto);
       router.push(Routes.DASBOARD.MAIN.href);
-    } catch (error: any) {
-      setApiError(error.message);
+    } catch (error: unknown) {
+      setIsSubmitting(false);
+      if (error instanceof Error) {
+        setApiError(error.message);
+      } else {
+        setApiError('Unespected error');
+      }
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
@@ -55,14 +60,15 @@ export default function SignUpPage() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '40vw' }}>
       <RegisterForm
-        children={<HeaderComponent />}
         formValues={formValues}
         formErrors={formErrors}
         apiError={apiError}
         handleInputChange={handleInputChange}
         handleRegister={register}
         disableRegister={disableRegister}
-      />
+      >
+        <HeaderComponent />
+      </RegisterForm>
     </div>
   );
 };

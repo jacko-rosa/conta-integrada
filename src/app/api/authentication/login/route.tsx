@@ -9,7 +9,7 @@ export async function POST(request: Request) {
         const userDto: UserDto = await request.json();
         const token = await signIn(userDto);
         return NextResponse.json({ token });
-    } catch (error: any) {
+    } catch (error: unknown) {
         return handleError(error);
     }
 }
