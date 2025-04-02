@@ -1,7 +1,7 @@
 import { UserDto } from '@/definitions/user.definition';
 import { signIn } from '@/services/autentication/authentication.service';
 import { NextResponse } from 'next/server';
-import { handleError } from '../../handle-errors';
+import { handleApiError } from '../../handle-errors';
 
 
 export async function POST(request: Request) {
@@ -10,6 +10,6 @@ export async function POST(request: Request) {
         const token = await signIn(userDto);
         return NextResponse.json({ token });
     } catch (error: unknown) {
-        return handleError(error);
+        return handleApiError(error);
     }
 }

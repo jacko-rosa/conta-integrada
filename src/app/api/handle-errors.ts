@@ -1,7 +1,7 @@
 import { ApiError } from "next/dist/server/api-utils";
 import { NextResponse } from "next/server";
 
-export function handleError(error: unknown) {
+export function handleApiError(error: unknown) {
     if (error instanceof ApiError) {
         if (error.statusCode === 400) {
             return NextResponse.json({ message: error.message }, { status: 400 });
