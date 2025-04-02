@@ -31,7 +31,7 @@ export function RegisterForm({
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit} method='POST' className={style.loginForm}>
+        <Box component="form" onSubmit={handleSubmit} method='POST' className={style.registerForm}>
             {children}
 
             {apiError && <p style={{ color: 'red', margin: '1vh' }}>{apiError}</p>}

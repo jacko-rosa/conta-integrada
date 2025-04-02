@@ -6,6 +6,7 @@
   color: var(--white);
   border-radius: 1vw;
   min-height: 10vh;
+  min-width: 200px;
   width: 100%;
   padding: 1vw;
 }
@@ -14,6 +15,7 @@
   text-decoration: none;
   margin: inherit;
   color: var(--white);
+  font-size: 60%;
 }
 
 .logo:hover {
