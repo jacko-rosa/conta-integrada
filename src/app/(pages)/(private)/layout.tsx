@@ -1,15 +1,25 @@
 import { HeaderComponent } from "@/app/components/header/home/header.componten";
 import ProtectedRoute from "@/app/components/protected-route/protected-route.component";
+import Link from "next/link";
 
 export default function PrivateLayout({ children }: { children: React.ReactNode; }) {
   return (
-    <body>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '98vw', maxWidth: '2500px', paddingTop: '1vh' }}>
-        <ProtectedRoute>
+    <ProtectedRoute>
+      <main style={{ display: 'flex', width: '100vw', maxWidth: '2500px', padding: '1vh 1vw 1vh 1vw' }}>
+        <div style={{ border: '1px solid black', display: 'block', width: '20%', minHeight: '98vh' }}>
+          {/* TODO subistituir por SideNav  */}
+        </div>
+        <div style={{ width: '80%' }}>
           <HeaderComponent />
-          {children}
-        </ProtectedRoute>
-      </div>
-    </body>
+          <div style={{ margin: '1vh 0 0 1vw' }}>
+            {/* TODO subistituir por Breadcrumbs */}
+            <Link rel="stylesheet" href=""> loren/Ipsum</Link>
+          </div>
+          <div style={{ margin: '1vh 0 0 1vw' }}>
+            {children}
+          </div>
+        </div>
+      </main>
+    </ProtectedRoute>
   );
 }
