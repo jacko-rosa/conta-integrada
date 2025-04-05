@@ -26,7 +26,7 @@ export const Routes = {
         },
         EDIT: {
             label: 'Accounts Edit',
-            href: '/accounts/{id}'
+            href: (id: string) => `/accounts/${id}`
         },
         REGISTER: {
             label: 'Accounts Register',

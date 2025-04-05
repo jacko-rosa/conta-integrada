@@ -1,5 +1,6 @@
 'use client'
 
+import { Routes } from "@/utils/routes";
 import { Card, CircularProgress, Typography } from "@mui/material";
 import Link from "next/link";
 
@@ -13,7 +14,7 @@ export function AccountSummary({ value, loading, error }: AccountSummaryProp) {
 
     return (
         <Card style={{ border: 'solid black 1px', width: '100%' }}>
-            <Link href="/accounts" >
+            <Link href={Routes.ACCOUNTS.MAIN.href} >
                 Accounts
             </Link>
             <Card>
