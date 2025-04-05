@@ -1,6 +1,5 @@
 import { HeaderComponent } from "@/app/components/header/home/header.componten";
 import ProtectedRoute from "@/app/components/protected-route/protected-route.component";
-import Link from "next/link";
 
 export default function PrivateLayout({ children }: { children: React.ReactNode; }) {
   return (
@@ -11,10 +10,6 @@ export default function PrivateLayout({ children }: { children: React.ReactNode;
         </div>
         <div style={{ width: '80%' }}>
           <HeaderComponent />
-          <div style={{ margin: '1vh 0 0 1vw' }}>
-            {/* TODO subistituir por Breadcrumbs */}
-            <Link rel="stylesheet" href=""> loren/Ipsum</Link>
-          </div>
           <div style={{ margin: '1vh 0 0 1vw' }}>
             {children}
           </div>

@@ -2,7 +2,8 @@
 
 import { ImagesArguments } from "@/utils/images";
 import { Routes } from "@/utils/routes";
-import { Card, Typography } from "@mui/material";
+import { ArrowPathIcon } from "@heroicons/react/20/solid";
+import { Card, CircularProgress, Typography } from "@mui/material";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -21,6 +22,24 @@ export function Account({ compeCode, branchCode, accountNumber, digit, balance, 
 
     return (
         <Card style={{ border: 'solid black 1px', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            {showContent({ compeCode, branchCode, accountNumber, digit, balance, id, loading, error })}
+        </Card >
+    )
+}
+
+function showContent({ compeCode, branchCode, accountNumber, digit, balance, id, loading, error }: AccountProp) {
+    if (loading)
+        return (<Card><CircularProgress /></Card>);
+    if (error)
+        return (
+            <Card style={{ minHeight: '75px', display: 'flex', alignItems: 'center' }}>
+                <div>
+                    <span style={{ color: 'red', margin: '1vh' }}>{error}</span>
+                </div>
+                <ArrowPathIcon onClick={() => { }} style={{ cursor: "pointer", height: "30px", color: 'var(--primary-blue)' }} />
+            </Card>);
+    return (
+        <>
             <Image src={ImagesArguments.banks.src + compeCode + '.png'} alt={ImagesArguments.banks.alt + compeCode} width={"50"} height={'50'} />
             <Card>
                 <Typography>
@@ -32,9 +51,9 @@ export function Account({ compeCode, branchCode, accountNumber, digit, balance, 
                     </Link>
                 </Typography>
                 <Typography>
-                    R$ {balance}
+                    R$ {balance.toPrecision(2)}
                 </Typography>
             </Card>
-        </Card>
+        </>
     )
 }

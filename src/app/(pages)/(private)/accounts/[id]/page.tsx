@@ -1,7 +1,11 @@
+import { Breadcrumps } from "@/app/components/breadcrumps/breadcrumps";
+import { Routes } from "@/utils/routes";
+
 export default function AccountEditPage() {
     return (
         <div>
-            <h1>Account Edit</h1>
+            
+            <Breadcrumps crumbs={[Routes.ACCOUNTS.MAIN]} actual={Routes.ACCOUNTS.EDIT} />
         </div>
     )
 }
