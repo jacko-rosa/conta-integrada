@@ -3,7 +3,7 @@
 import { HeaderComponent } from '@/app/components/header/home/header.componten';
 import { RegisterForm } from '@/app/components/home/register/register-form.component';
 import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
-import { registerService } from '@/app/web-services/home/authentication.web-service';
+import { AuthenticationWebService } from '@/app/web-services/home/authentication.web-service';
 import { UserMapper } from '@/mappers/user.mapper';
 import { Routes } from '@/utils/routes';
 import { useRouter } from 'next/navigation';
@@ -30,7 +30,7 @@ export default function SignUpPage() {
     try {
       const form = new FormData(event.currentTarget)
       const dto = UserMapper.formToDto(form);
-      await registerService(dto);
+      await AuthenticationWebService.registerService(dto);
       router.push(Routes.DASBOARD.MAIN.href);
     } catch (error: unknown) {
       setIsSubmitting(false);

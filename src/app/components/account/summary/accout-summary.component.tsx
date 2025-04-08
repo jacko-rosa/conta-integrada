@@ -1,7 +1,7 @@
 'use client'
 
 import { Routes } from "@/utils/routes";
-import { Card, CircularProgress, Typography } from "@mui/material";
+import { Box, Card, CircularProgress, Typography } from "@mui/material";
 import Link from "next/link";
 
 interface AccountSummaryProp {
@@ -13,7 +13,7 @@ interface AccountSummaryProp {
 export function AccountSummary({ value, loading, error }: AccountSummaryProp) {
 
     return (
-        <Card style={{ border: 'solid black 1px', width: '100%' }}>
+        <Box style={{ border: 'solid black 1px', width: '100%' }}>
             <Link href={Routes.ACCOUNTS.MAIN.href} >
                 Accounts
             </Link>
@@ -29,6 +29,6 @@ export function AccountSummary({ value, loading, error }: AccountSummaryProp) {
                     }
                 </Typography>
             </Card>
-        </Card>
+        </Box>
     )
 }

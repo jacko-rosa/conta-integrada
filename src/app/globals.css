@@ -18,7 +18,7 @@
   --accent: var(--primary-blue);
 
   color: var(--accent);
-
+  background-color: var(--background);
 }
 
 .dark-theme {

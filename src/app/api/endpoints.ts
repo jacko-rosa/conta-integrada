@@ -18,6 +18,10 @@ export const Endpoints = {
         balance: {
             path: '/api/accounts/balance',
             methods: { GET },
-        }
+        },
+        register: {
+            path: '/api/accounts/register',
+            methods: { POST },
+        },
     }
 }

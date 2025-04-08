@@ -1,9 +1,9 @@
-import { Balance } from '@/definitions/account.definition';
+import { BalanceDto } from '@/definitions/account.definition';
 import { useEffect, useState } from 'react';
 import { AccountsWebService } from '../web-services/account/account.web-service';
 
 export function useAccountSummary() {
-    const [data, setData] = useState<Balance | null>(null);
+    const [data, setData] = useState<BalanceDto | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 

@@ -1,6 +1,7 @@
 'use server'
 
 import { UserDto } from "@/definitions/user.definition";
+import { PayloadToken } from "@/definitions/util.definition";
 import { handleError } from "@/utils/handle-error";
 import { logEnd, logInit } from "@/utils/util";
 import jwt from 'jsonwebtoken';
@@ -67,7 +68,7 @@ function siginjwt(user: UserDto) {
         name: user.name,
         lastName: user.lastName,
         document: user.document
-    };
+    } as PayloadToken
     const options = {
         expiresIn: '1h'
     } as jwt.SignOptions;

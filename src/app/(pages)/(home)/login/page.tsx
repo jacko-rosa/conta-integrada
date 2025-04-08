@@ -3,7 +3,7 @@
 import { HeaderComponent } from '@/app/components/header/home/header.componten';
 import { LoginForm } from '@/app/components/home/login/sign-in.component';
 import { AuthorizationValidation } from '@/app/form-validators/authorization.validator';
-import { loginService } from '@/app/web-services/home/authentication.web-service';
+import { AuthenticationWebService } from '@/app/web-services/home/authentication.web-service';
 import { UserMapper } from '@/mappers/user.mapper';
 import { Routes } from '@/utils/routes';
 import { useRouter } from 'next/navigation';
@@ -27,7 +27,7 @@ export default function LoginPage() {
     try {
       const form = new FormData(event.currentTarget)
       const dto = UserMapper.formToDto(form);
-      await loginService(dto);
+      await AuthenticationWebService.loginService(dto);
       router.push(Routes.DASBOARD.MAIN.href);
     } catch (error: unknown) {
       setIsSubmitting(false);

@@ -1,7 +1,7 @@
 'use client'
 
 import { AccountSummary } from "@/app/components/account/summary/accout-summary.component";
-import { useAccountSummary } from "@/app/hooks/useAccount";
+import { useAccountSummary } from "@/app/hooks/use-account";
 import { BRAND } from "@/utils/constants";
 import { Routes } from "@/utils/routes";
 import { useEffect } from "react";

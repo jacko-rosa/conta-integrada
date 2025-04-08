@@ -2,9 +2,11 @@
 
 import { Endpoints } from '@/app/api/endpoints';
 import { UserDto } from '@/definitions/user.definition';
+import { PayloadToken } from '@/definitions/util.definition';
 import { AUTHORIZATION } from '@/utils/constants';
+import jwt from 'jsonwebtoken';
 
-export async function loginService(dto: UserDto) {
+const loginService = async (dto: UserDto) => {
   const response = await fetch(Endpoints.authentication.login.path, {
     method: Endpoints.authentication.login.methods.POST,
     body: JSON.stringify(dto),
@@ -17,7 +19,7 @@ export async function loginService(dto: UserDto) {
   sessionStorage.setItem(AUTHORIZATION, data.token);
 }
 
-export async function registerService(dto: UserDto) {
+const registerService = async (dto: UserDto) => {
   const response = await fetch(Endpoints.authentication.register.path, {
     method: Endpoints.authentication.register.methods.POST,
     body: JSON.stringify(dto),
@@ -28,4 +30,18 @@ export async function registerService(dto: UserDto) {
   }
   const data = await response.json();
   sessionStorage.setItem(AUTHORIZATION, data.token);
+}
+
+const decodeJwt = (): PayloadToken => {
+  const token = sessionStorage.getItem(AUTHORIZATION);
+  if (!token) {
+    throw new Error('Token not found');
+  }
+  return jwt.decode(token) as PayloadToken;
+}
+
+export const AuthenticationWebService = {
+  loginService,
+  registerService,
+  decodeJwt,
 }
