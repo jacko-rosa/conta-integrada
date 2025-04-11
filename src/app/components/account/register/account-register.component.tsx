@@ -40,22 +40,23 @@ export function AccountRegisterForm({
     }, []);
 
     return (
-        <form style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }} onSubmit={handleSubmit}>
+        <form style={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }} onSubmit={handleSubmit}>
             {apiError && <p style={{ color: 'red', margin: '1vh' }}>{apiError}</p>}
 
             <Select label="Compe Code"
+                name="compeCode"
                 value={formValues['compeCode']}
-                onChange={(e) => handleInputChange({ name: 'compeCode', value: e.target.value } as HTMLInputElement, 'Compe Code')}
+                onChange={(e) => handleInputChange({ name: e.target.name, value: e.target.value } as HTMLInputElement, 'Compe Code')}
                 error={!!formErrors['compeCode']}
                 style={{ width: '100%' }}
             >
-                <MenuItem key={'CompeCode'} value={'000'} disabled selected={true}>
-                    Bank
+                <MenuItem value={'000'} disabled selected={true}>
+                    CompeCode
                 </MenuItem>
                 {
                     compeCodes.map((option) => (
-                        <MenuItem key={option.key} value={option.value}>
-                            {option.value}
+                        <MenuItem value={option.value}>
+                            {option.key}
                         </MenuItem>
                     ))
                 }

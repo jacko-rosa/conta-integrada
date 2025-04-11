@@ -1,9 +1,9 @@
 'use client';
 
-import { Endpoints } from '@/app/api/endpoints';
 import { UserDto } from '@/definitions/user.definition';
 import { PayloadToken } from '@/definitions/util.definition';
 import { AUTHORIZATION } from '@/utils/constants';
+import { Endpoints } from '@/utils/endpoints';
 import jwt from 'jsonwebtoken';
 
 const loginService = async (dto: UserDto) => {

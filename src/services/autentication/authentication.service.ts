@@ -50,7 +50,7 @@ export async function veryfy(token?: string): Promise<string> {
         const decoded = jwt.decode(token);
         if (decoded !== null && typeof decoded === 'object') {
             if (!decoded.exp) {
-                throw {} as jwt.TokenExpiredError;
+                throw new Error as jwt.TokenExpiredError;
             }
         }
 

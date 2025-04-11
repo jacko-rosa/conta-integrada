@@ -9,16 +9,20 @@ export interface BalanceDto {
 
 export interface AccountDto {
     id?: string;
+    accountId?: string;
     document: string // CPF/CNPJ
     compeCode: string
     branchCode: string
-    accountNumber: string
+    number: string
     digit: string
+    type?: string
 }
-export interface Account extends BaseTable {
+export interface AccountDomain extends BaseTable {
     document: string // CPF/CNPJ
     compe_code: string
     branch_code: string
     account_number: string
     digit: string
+    type: string
+    external_id: string
 }

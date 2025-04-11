@@ -10,7 +10,7 @@ const CLAZZ = 'UserService';
 export async function createUser(dto: UserDto): Promise<UserDto> {
     const METHOD = 'createUser';
     logInit(CLAZZ, METHOD, dto);
-    //todo validation        
+    // todo validation        
     const domain = UserMapper.dtoToDomain(dto);
     const response = await createUserSql(domain);
     dto.id = response.id;

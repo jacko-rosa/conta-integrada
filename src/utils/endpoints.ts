@@ -25,3 +25,18 @@ export const Endpoints = {
         },
     }
 }
+
+export const ExternalEndpoints = {
+    accounts: {
+        path: '/accounts',
+        methods: { GET },
+        id: {
+            path: (id: string) => `/accounts/${id}`,
+            methods: { GET },
+            balances: {
+                path: (id: string) => `/accounts/${id}/balances`,
+                methods: { GET },
+            },
+        },
+    },
+};

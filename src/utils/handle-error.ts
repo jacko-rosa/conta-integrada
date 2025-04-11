@@ -7,13 +7,13 @@ export function handleError(error: unknown, CLAZZ: string, METHOD: string) {
         return throwError(error, CLAZZ, METHOD);
     }
     if (error instanceof jwt.TokenExpiredError) {
-        const errorTyped = new ApiError(401, 'Unauthorized: Expired credentials');
+        const errorTyped = { statusCode: 401, message: 'Unauthorized: Expired credentials' } as ApiError;
         return throwError(errorTyped, CLAZZ, METHOD);
     }
     if (error instanceof jwt.JsonWebTokenError) {
-        const errorTyped = new ApiError(401, 'Unauthorized: Invalid token');
+        const errorTyped = { statusCode: 401, message: 'Unauthorized: Invalid token' } as ApiError;
         return throwError(errorTyped, CLAZZ, METHOD);
     }
-    const errorTyped = new ApiError(500, `Internal Error: Error to ${METHOD}`);
+    const errorTyped = { statusCode: 500, message: `Internal Error: Error to ${METHOD}` } as ApiError;
     return throwError(errorTyped, CLAZZ, METHOD);
 }

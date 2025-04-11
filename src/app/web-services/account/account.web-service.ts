@@ -1,9 +1,10 @@
-import { Endpoints } from "@/app/api/endpoints";
 import { AccountDto, BalanceDto } from "@/definitions/account.definition";
+import { Endpoints } from "@/utils/endpoints";
 import { AuthenticationWebService } from "../home/authentication.web-service";
 
 const registerAccount = async (dto: AccountDto): Promise<AccountDto> => {
   const payload = AuthenticationWebService.decodeJwt()
+  dto.document = payload.document;
   const response = await fetch(Endpoints.accounts.register.path, {
     method: Endpoints.accounts.register.methods.POST,
     body: JSON.stringify(dto),
@@ -31,20 +32,20 @@ const getBalance = async (document: string): Promise<BalanceDto> => {
 
 const getCompeCodes = async (): Promise<{ key: string; value: string }[]> => {
   // const response = await fetch(Endpoints.accounts.compeCodes.path, {
-  //   method: Endpoints.accounts.compeCodes.methods.GET,
+  // method: Endpoints.accounts.compeCodes.methods.GET,
   // });
 
   const response = {
     ok: true,
     status: 200,
     json: async () => [
-      { key: '001', value: 'Banco do Brasil S.A.' },
-      { key: '033', value: 'Santander' },
-      { key: '104', value: 'Caixa Econômica Federal' },
-      { key: '237', value: 'Bradesco S.A.' },
-      { key: '341', value: 'Itaú Unibanco S.A.' },
-      { key: '399', value: 'HSBC Brasil S.A.' },
-      { key: '756', value: 'Banco Cooperativo do Brasil S.A.' }
+      { value: '001', key: 'Banco do Brasil S.A.' },
+      { value: '033', key: 'Santander' },
+      { value: '104', key: 'Caixa Econômica Federal' },
+      { value: '237', key: 'Bradesco S.A.' },
+      { value: '341', key: 'Itaú Unibanco S.A.' },
+      { value: '399', key: 'HSBC Brasil S.A.' },
+      { value: '756', key: 'Banco Cooperativo do Brasil S.A.' }
     ],
   } as Response;
 
