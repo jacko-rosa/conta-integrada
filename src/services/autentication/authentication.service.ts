@@ -40,7 +40,7 @@ export async function signIn(req: UserDto): Promise<string> {
 
 }
 
-export async function veryfy(token?: string): Promise<string> {
+export async function verify(token?: string): Promise<string> {
     const METHOD = 'veryfy';
     logInit(CLAZZ, METHOD, { token });
     try {
@@ -57,6 +57,24 @@ export async function veryfy(token?: string): Promise<string> {
         const verified = jwt.verify(token, process.env.AUTH_SECRET!);
         logEnd(CLAZZ, METHOD, { verified });
         return Promise.resolve(token);
+    } catch (error: unknown) {
+        return handleError(error, CLAZZ, METHOD)
+    }
+}
+
+export async function decode(token: string): Promise<PayloadToken> {
+    const METHOD = 'decode';
+    logInit(CLAZZ, METHOD, { token });
+    try {
+        if (!token) {
+            throw new ApiError(400, 'Bad Request: token required');
+        }
+        const decoded = jwt.decode(token);
+        if (decoded) {
+            return Promise.resolve(decoded as PayloadToken);
+        } else {
+            throw new ApiError(401, 'Unauthorized: Invalid token');
+        }
     } catch (error: unknown) {
         return handleError(error, CLAZZ, METHOD)
     }

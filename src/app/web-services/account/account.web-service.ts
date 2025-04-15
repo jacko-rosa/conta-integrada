@@ -1,12 +1,13 @@
 import { AccountDto, BalanceDto } from "@/definitions/account.definition";
 import { Endpoints } from "@/utils/endpoints";
+import { ApiError } from "next/dist/server/api-utils";
 import { AuthenticationWebService } from "../home/authentication.web-service";
 
 const registerAccount = async (dto: AccountDto): Promise<AccountDto> => {
   const payload = AuthenticationWebService.decodeJwt()
   dto.document = payload.document;
-  const response = await fetch(Endpoints.accounts.register.path, {
-    method: Endpoints.accounts.register.methods.POST,
+  const response = await fetch(Endpoints.accounts.path, {
+    method: Endpoints.accounts.methods.POST,
     body: JSON.stringify(dto),
   });
   if (!response.ok) {
@@ -16,16 +17,35 @@ const registerAccount = async (dto: AccountDto): Promise<AccountDto> => {
   return await response.json();
 }
 
+const getAccounts = async (): Promise<AccountDto[]> => {
+  const http = await fetch(Endpoints.accounts.path, {
+    method: Endpoints.accounts.methods.GET,
+    headers: {
+      Authorization: `Bearer ${AuthenticationWebService.getToken()}`,
+    },
+  });
+  if (!http.ok) {
+    const errorData = await http.json();
+    throw new ApiError(http.status, errorData.message);
+  }
+  const httpResponse = await http.json();
+  const result = httpResponse.data as AccountDto[];
+  return result;
+}
+
 const getBalance = async (document: string): Promise<BalanceDto> => {
   // const response = await fetch(Endpoints.accounts.balance.path, {
   // method: Endpoints.accounts.balance.methods.GET,
   // body: JSON.stringify(document),
   // });
-  const response = await fetchBalance(true); // TODO remover mock
+  const response = await fetchBalance(); // TODO remover mock
+  console.log(document); //todo remover mock
+
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw { status: response.status, message: errorData.message };
+    console.log(errorData); //todo remover mock
+    // throw { status: response.status, message: errorData.message };
   }
   return response.json() as Promise<BalanceDto>;
 };
@@ -57,7 +77,7 @@ const getCompeCodes = async (): Promise<{ key: string; value: string }[]> => {
 
 }
 
-async function fetchBalance(ok: boolean): Promise<{ ok: boolean; status: number; json: () => Promise<any> }> {
+async function fetchBalance(): Promise<{ ok: boolean; status: number; json: () => Promise<unknown> }> {
   const amount: BalanceDto = {
     availableAmount: {
       amount: 1000.00,
@@ -71,17 +91,12 @@ async function fetchBalance(ok: boolean): Promise<{ ok: boolean; status: number;
     json: async () => amount,
   } as Response;
 
-  const fail = {
-    ok: false,
-    status: 500,
-    json: async () => { message: 'Error' },
-  } as Response;
-
-  return ok ? success : fail;
+  return success;
 } // TODO remover mock
 
 export const AccountsWebService = {
   getBalance,
   registerAccount,
-  getCompeCodes
+  getCompeCodes,
+  getAccounts
 };

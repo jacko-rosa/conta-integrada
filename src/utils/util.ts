@@ -11,6 +11,6 @@ export function logEnd(clazz: string, method: string, response?: object) {
 }
 
 export async function throwError(error: Error, clazz: string, method: string): Promise<never> {
-    console.log(`CLAZZ: ${clazz} | METHOD: ${method} | ERROR: ${error.name} MESSAGE: ${error.message}`);
+    console.error(`CLAZZ: ${clazz} | METHOD: ${method} | ERROR: ${JSON.stringify(error)} MESSAGE: ${error.message}`);
     throw error;
 }

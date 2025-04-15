@@ -47,3 +47,8 @@ body {
 .accent-background {
   background-color: var(--accent);
 }
+
+.error {
+   color: 'red';
+   margin: '1vh' 
+}

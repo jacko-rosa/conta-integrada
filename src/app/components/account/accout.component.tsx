@@ -2,8 +2,7 @@
 
 import { ImagesArguments } from "@/utils/images";
 import { Routes } from "@/utils/routes";
-import { ArrowPathIcon } from "@heroicons/react/20/solid";
-import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -13,31 +12,19 @@ interface AccountProp {
     accountNumber: string,
     digit: string,
     balance: number,
-    id: string,
-    error?: string | null,
-    loading?: boolean
+    id: string
 }
 
-export function Account({ compeCode, branchCode, accountNumber, digit, balance, id, loading, error }: AccountProp) {
+export function Account({ compeCode, branchCode, accountNumber, digit, balance, id }: AccountProp) {
 
     return (
         <Box style={{ border: 'solid black 1px', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            {showContent({ compeCode, branchCode, accountNumber, digit, balance, id, loading, error })}
+            {showContent({ compeCode, branchCode, accountNumber, digit, balance, id })}
         </Box >
     )
 }
 
-function showContent({ compeCode, branchCode, accountNumber, digit, balance, id, loading, error }: AccountProp) {
-    if (loading)
-        return (<Card><CircularProgress /></Card>);
-    if (error)
-        return (
-            <Box style={{ minHeight: '75px', display: 'flex', alignItems: 'center' }}>
-                <div>
-                    <span style={{ color: 'red', margin: '1vh' }}>{error}</span>
-                </div>
-                <ArrowPathIcon onClick={() => { }} style={{ cursor: "pointer", height: "30px", color: 'var(--primary-blue)' }} />
-            </Box>);
+function showContent({ compeCode, branchCode, accountNumber, digit, balance, id }: AccountProp) {
     return (
         <>
             <Image src={ImagesArguments.banks.src + compeCode + '.png'} alt={ImagesArguments.banks.alt + compeCode} width={"50"} height={'50'} />

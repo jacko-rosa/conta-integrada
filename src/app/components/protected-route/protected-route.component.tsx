@@ -1,6 +1,6 @@
 'use client';
 
-import { veryfy } from '@/services/autentication/authentication.service';
+import { verify } from '@/services/autentication/authentication.service';
 import { AUTHORIZATION } from '@/utils/constants';
 import { Routes } from '@/utils/routes';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
                 router.push(Routes.HOME.LOGIN.href);
             } else {
                 try {
-                    await veryfy(token);
+                    await verify(token);
                     setIsVerified(true);
                 } catch {
                     router.push(Routes.HOME.LOGIN.href);

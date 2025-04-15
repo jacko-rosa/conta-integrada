@@ -30,7 +30,22 @@ function toDomain(dto: AccountDto): AccountDomain {
     return domain;
 }
 
+function toDto(domain: AccountDomain): AccountDto {
+    const result = {
+        id: domain.id,
+        accountId: domain.external_id,
+        document: domain.document,
+        compeCode: domain.compe_code,
+        branchCode: domain.branch_code,
+        number: domain.account_number,
+        digit: domain.digit,
+        type: domain.type,
+    } as AccountDto;
+    return result;
+}
+
 export const AccountMapper = {
     formToDto,
-    toDomain
+    toDomain,
+    toDto
 }

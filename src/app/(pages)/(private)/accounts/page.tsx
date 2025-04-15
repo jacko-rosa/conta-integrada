@@ -2,7 +2,8 @@
 
 import { Account } from "@/app/components/account/accout.component";
 import { Breadcrumps } from "@/app/components/breadcrumps/breadcrumps";
-import { useAccountSummary } from "@/app/hooks/use-account";
+import { useAccounts, useAccountSummary } from "@/app/hooks/use-account";
+import { AccountDto } from "@/definitions/account.definition";
 import { BRAND } from "@/utils/constants";
 import { Routes } from "@/utils/routes";
 import { Button, Card, CircularProgress, Divider, Typography } from "@mui/material";
@@ -11,11 +12,12 @@ import { useEffect } from "react";
 
 export default function AccountPage() {
     const { data: summaryData, loading: summaryLoading, error: summaryError } = useAccountSummary();
-    const countAccounts = 4;
+    const { data: listAccounts, loading: accountsLoading, error: accountsError } = useAccounts();
 
     useEffect(() => {
         document.title = `${BRAND} | ${Routes.DASBOARD.MAIN.label}`;
     }, []);
+
     return (
         <div>
             <Breadcrumps crumbs={[]} actual={Routes.ACCOUNTS.MAIN} />
@@ -25,7 +27,7 @@ export default function AccountPage() {
                     summaryError ? <span style={{ color: 'red', margin: '1vh' }}>{summaryError.message}</span> :
                         <>
                             <Typography>
-                                saldo em {countAccounts} Contas
+                                {`Balance at ${listAccounts?.length || 0} ${listAccounts?.length === 1 ? 'account' : 'accounts'}`}
                             </Typography>
                             <Typography>
                                 R$ {summaryData?.availableAmount.amount?.toFixed(2)}
@@ -41,19 +43,42 @@ export default function AccountPage() {
 
             <Card>
                 <Typography style={{ margin: '1vh' }}>
-                    Your Accounts
+                    {accountsLoading ? 'Loading Accounts...' :
+                        accountsError ? <span className="error">{accountsError.message}</span> :
+                            listAccounts?.length > 0 ? 'Your Accounts' : 'You do not have an account'}
                 </Typography>
                 <ul style={{ display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', gap: '1vh' }}>
-                    <li><Account compeCode={"104"} branchCode={"1644"} accountNumber={"26242"} digit={"3"} balance={0} id="1" loading={undefined} /></li>
-                    <Divider />
-                    <li><Account compeCode={"104"} branchCode={"1644"} accountNumber={"26242"} digit={"4"} balance={0} id="2" loading={undefined} /></li>
-                    <Divider />
-                    <li><Account compeCode={"104"} branchCode={"1644"} accountNumber={"26242"} digit={"5"} balance={0} id="3" loading={undefined} /></li>
-                    <Divider />
-                    <li><Account compeCode={"104"} branchCode={"1644"} accountNumber={"26242"} digit={"6"} balance={0} id="" loading={undefined} /></li>
+                    {accountList(listAccounts, accountsLoading, accountsError)}
                 </ul>
             </Card>
 
         </div>
-    )
+    );
+}
+
+function accountList(listAccounts: AccountDto[] | undefined, accountsLoading: boolean, accountsError: Error | null) {
+    if (accountsLoading) {
+        return <li><CircularProgress /></li>;
+    }
+
+    if (accountsError) {
+        return <li><span style={{ color: 'red' }}>{accountsError.message}</span></li>;
+    }
+
+    console.log('listAccounts', listAccounts);
+
+
+    return listAccounts?.map((account, index) => (
+        <li key={index}>
+            <Account
+                compeCode={account.compeCode}
+                branchCode={account.branchCode}
+                accountNumber={account.number}
+                digit={account.digit}
+                balance={0}
+                id={account.id ?? String(index)}
+            />
+            <Divider />
+        </li>
+    )) || null;
 }

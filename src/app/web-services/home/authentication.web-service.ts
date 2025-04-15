@@ -40,8 +40,13 @@ const decodeJwt = (): PayloadToken => {
   return jwt.decode(token) as PayloadToken;
 }
 
+const getToken = () => {
+  return sessionStorage.getItem(AUTHORIZATION);
+}
+
 export const AuthenticationWebService = {
   loginService,
   registerService,
   decodeJwt,
+  getToken
 }

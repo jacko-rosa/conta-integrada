@@ -52,6 +52,8 @@ export default function AccuntRegisterPage() {
             return updatedErrors;
         });
         setApiError(null);
+        console.log(label); // todo: remove this line
+        
         // const errors = AuthorizationValidation.validateFormSignUp(name, value, label, formErrors);
         // setFormErrors(errors);
     }

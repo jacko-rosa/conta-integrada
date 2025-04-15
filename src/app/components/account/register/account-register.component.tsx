@@ -55,7 +55,7 @@ export function AccountRegisterForm({
                 </MenuItem>
                 {
                     compeCodes.map((option) => (
-                        <MenuItem value={option.value}>
+                        <MenuItem value={option.value} key={option.key}>
                             {option.key}
                         </MenuItem>
                     ))

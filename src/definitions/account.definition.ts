@@ -16,6 +16,7 @@ export interface AccountDto {
     number: string
     digit: string
     type?: string
+    amount?: number
 }
 export interface AccountDomain extends BaseTable {
     document: string // CPF/CNPJ
