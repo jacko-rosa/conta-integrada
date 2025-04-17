@@ -30,7 +30,7 @@ export default function AccountPage() {
                                 {`Balance at ${listAccounts?.length || 0} ${listAccounts?.length === 1 ? 'account' : 'accounts'}`}
                             </Typography>
                             <Typography>
-                                R$ {summaryData?.availableAmount.amount?.toFixed(2)}
+                                R$ {summaryData?.amount?.toFixed(2)}
                             </Typography>
                             <Button variant="contained" color="primary" style={{ marginTop: '10px' }} >
                                 <Link href={Routes.ACCOUNTS.REGISTER.href} style={{ color: 'white', textDecoration: 'none' }}>

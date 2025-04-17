@@ -1,10 +1,8 @@
 import { BaseTable } from "./util.definition";
 
 export interface BalanceDto {
-    availableAmount: {
-        amount: number
-        currency: string,
-    }
+    amount: number
+    currency: string,
 }
 
 export interface AccountDto {

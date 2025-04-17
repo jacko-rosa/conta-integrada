@@ -1,6 +1,8 @@
 import { AccountDto, BalanceDto } from '@/definitions/account.definition';
+import { PayloadToken } from '@/definitions/util.definition';
 import { useEffect, useState } from 'react';
 import { AccountsWebService } from '../web-services/account/account.web-service';
+import { AuthenticationWebService } from '../web-services/home/authentication.web-service';
 
 export function useAccountSummary() {
     const [data, setData] = useState<BalanceDto | null>(null);
@@ -10,7 +12,9 @@ export function useAccountSummary() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await AccountsWebService.getBalance('123456789'); // TODO Substitua pelo documento real
+                const token: PayloadToken = AuthenticationWebService.decodeJwt();
+                const document = token.document;
+                const result = await AccountsWebService.getBalance(document);
                 setData(result);
             } catch (err) {
                 setError(err as Error);
@@ -18,7 +22,6 @@ export function useAccountSummary() {
                 setLoading(false);
             }
         }
-
         fetchData();
     }, []);
 
@@ -43,6 +46,5 @@ export function useAccounts() {
         }
         fetchData();
     }, []);
-
     return { data, loading, error };
 }

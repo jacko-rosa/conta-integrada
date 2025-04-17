@@ -14,7 +14,7 @@ export default function DashboardPage() {
     }, []);
     return (
         <div>
-            <AccountSummary value={summaryData?.availableAmount.amount} loading={summaryLoading} error={summaryError?.message} />
+            <AccountSummary value={summaryData?.amount} loading={summaryLoading} error={summaryError?.message} />
         </div>
     )
 }

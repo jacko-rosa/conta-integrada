@@ -5,7 +5,7 @@ import { AccountMapper } from "@/mappers/accout.mapper";
 import { createAccountSql, getAccountsSql } from "@/repositories/accout.repository";
 import { handleError } from "@/utils/handle-error";
 import { logEnd, logInit } from "@/utils/util";
-import { getExternalAccount } from "../openfinance/account.service";
+import { getExternalAccount, getExternalBalance } from "../openfinance/account.service";
 
 const CLAZZ = 'AccountService';
 
@@ -28,16 +28,22 @@ export async function registerAccount(req: AccountDto): Promise<AccountDto> {
 }
 
 export async function getAccounts(document: string): Promise<AccountDto[]> {
-    const METHOD = 'registerAccount';
+    const METHOD = 'getAccounts';
     try {
         logInit(CLAZZ, METHOD, { document });
         const listAccountDomain = await getAccountsSql(document);
-        const response = listAccountDomain.map((account) => {
-            return AccountMapper.toDto(account);
-        });
+        const listDto = listAccountDomain.map((account) => AccountMapper.toDto(account));
+        const promisses = listDto.map(async (account) => {
+            const balance = await getExternalBalance(account);
+            account.amount = balance.amount;
+            return account;
+        })
+        const response = await Promise.all(promisses)
         logEnd(CLAZZ, METHOD, response);
-        return Promise.resolve(response);
+        return response
     } catch (error: unknown) {
+        console.error('error', error);
+
         return handleError(error, CLAZZ, METHOD)
     }
 

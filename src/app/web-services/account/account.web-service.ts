@@ -79,10 +79,8 @@ const getCompeCodes = async (): Promise<{ key: string; value: string }[]> => {
 
 async function fetchBalance(): Promise<{ ok: boolean; status: number; json: () => Promise<unknown> }> {
   const amount: BalanceDto = {
-    availableAmount: {
-      amount: 1000.00,
-      currency: 'BRL',
-    },
+    amount: 1000.00,
+    currency: 'BRL',
   };
 
   const success = {
