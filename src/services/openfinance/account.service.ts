@@ -13,7 +13,7 @@ export async function getExternalAccount(req: AccountDto): Promise<AccountDto> {
     logInit(CLAZZ, METHOD, req);
     try {
         // TODO: Validation
-        const tokenBacen = await authenticate(req.document, req.compeCode);
+        const tokenBacen = await authenticate(req);
         const responses = await getExternalAccountApi(req, tokenBacen);
         // TODO: verificar se conta req existe em conta responses
         logEnd(CLAZZ, METHOD, { response: responses });
@@ -28,7 +28,7 @@ export async function getExternalBalance(req: AccountDto): Promise<BalanceDto> {
     try {
         logInit(CLAZZ, METHOD, req);
         // TODO: Validation
-        const tokenBacen = await authenticate(req.document, req.compeCode);
+        const tokenBacen = await authenticate(req);
         const response = await getExternalBalanceApi(req, tokenBacen);
         logEnd(CLAZZ, METHOD, response);
         return response;

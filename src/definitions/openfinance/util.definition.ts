@@ -2,6 +2,7 @@ export interface PayloadTokenBacen {
     client_info: {
         client_id: string;
         compe_code: string;
+        account_id?: string;
     },
     receptor_info: {
         client_id: string;
