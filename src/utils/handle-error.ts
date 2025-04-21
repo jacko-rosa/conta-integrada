@@ -3,6 +3,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import { throwError } from "./util";
 
 export function handleError(error: unknown, CLAZZ: string, METHOD: string) {
+    console.error(error);
     if (error instanceof ApiError) {
         return throwError(error, CLAZZ, METHOD);
     }
@@ -19,8 +20,7 @@ export function handleError(error: unknown, CLAZZ: string, METHOD: string) {
 }
 
 export function handleDbError(error: unknown, CLAZZ: string, METHOD: string) {
-    console.log('handleDbError');
-
+    console.error(error);
     if (error instanceof Object && 'code' in error && 'message' in error) {
         if (String(error.code).startsWith('23')) {
             const errorTyped = new ApiError(400, `Bad Request: ${error.message}`);

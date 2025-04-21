@@ -1,7 +1,7 @@
 import { BaseTable } from "./util.definition";
 
 export interface BalanceDto {
-    amount: number
+    amount: number,
     currency: string,
 }
 
@@ -16,6 +16,13 @@ export interface AccountDto {
     type?: string
     amount?: number
 }
+
+export interface AccountSummary {
+    amount: number,
+    currency: string,
+    qntAcounts: number
+}
+
 export interface AccountDomain extends BaseTable {
     document: string // CPF/CNPJ
     compe_code: string

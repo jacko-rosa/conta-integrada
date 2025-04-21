@@ -10,6 +10,10 @@ import { v4 as uuidGenerate } from 'uuid';
 
 const CLAZZ = 'AccountExternalService';
 
+interface BalanceTotal {
+    availableAmount: BalanceDto;
+}
+
 export async function getExternalAccountApi(req: AccountDto, token: string): Promise<AccountDto[]> {
     const METHOD = 'getExternalAccountApi';
     logInit(CLAZZ, METHOD, req);
@@ -56,8 +60,8 @@ export async function getExternalBalanceApi(req: AccountDto, token: string): Pro
             const errorData = await httpResponse.json();
             throw new ApiError(httpResponse.status, errorData.message);
         }
-        const responseApi = await httpResponse.json() as unknown as ResponseApi<BalanceDto>;
-        const response = responseApi.data;
+        const responseApi = await httpResponse.json() as unknown as ResponseApi<BalanceTotal>;
+        const response = responseApi.data.availableAmount;
         logEnd(CLAZZ, METHOD, response);
         return Promise.resolve(response);
     } catch (error: unknown) {

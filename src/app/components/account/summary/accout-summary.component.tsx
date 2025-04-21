@@ -1,34 +1,33 @@
 'use client'
 
-import { Routes } from "@/utils/routes";
-import { Box, Card, CircularProgress, Typography } from "@mui/material";
+import { useAccountSummary } from "@/app/hooks/use-account";
+import { monetaryValue } from "@/utils/util";
+import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import Link from "next/link";
+import { Crumb } from "../../breadcrumps/breadcrumps";
 
-interface AccountSummaryProp {
-    value: number | undefined,
-    error?: string | null,
-    loading?: boolean
-}
 
-export function AccountSummary({ value, loading, error }: AccountSummaryProp) {
+export function AccountSummary({ href, label }: Crumb) {
+    const { data: summaryData, loading: summaryLoading, error: summaryError } = useAccountSummary();
 
     return (
-        <Box style={{ border: 'solid black 1px', width: '100%' }}>
-            <Link href={Routes.ACCOUNTS.MAIN.href} >
-                Accounts
-            </Link>
-            <Card>
-                <Typography>
-                    Balance
-                </Typography>
-                <Typography>
-                    {
-                        loading ? <CircularProgress /> :
-                            error ? <span style={{ color: 'red', margin: '1vh' }}>{error}</span> :
-                                value ? 'R$' + value.toFixed(2) : 'R$ 0.00'
-                    }
-                </Typography>
-            </Card>
-        </Box>
+        <Card style={{ border: 'solid black 1px', width: '100%' }}>
+            {summaryLoading ? <CircularProgress /> :
+                summaryError ? <span style={{ color: 'red', margin: '1vh' }}>{summaryError.message}</span> :
+                    <>
+                        <Typography>
+                            {`Balance at ${summaryData?.qntAcounts || 0} ${summaryData?.qntAcounts === 1 ? 'account' : 'accounts'}`}
+                        </Typography>
+                        <Typography>
+                            {monetaryValue(summaryData?.amount || 0)}
+                        </Typography>
+                        <Button variant="contained" color="primary" style={{ marginTop: '10px' }} >
+                            <Link href={String(href)} style={{ color: 'white', textDecoration: 'none' }}>
+                                {label}
+                            </Link>
+                        </Button>
+                    </>
+            }
+        </Card>
     )
 }

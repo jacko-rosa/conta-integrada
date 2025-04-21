@@ -1,7 +1,9 @@
 'use client'
 
+import { Instituition } from "@/definitions/instituition.definitions";
 import { ImagesArguments } from "@/utils/images";
 import { Routes } from "@/utils/routes";
+import { monetaryValue } from "@/utils/util";
 import { Box, Card, Typography } from "@mui/material";
 import Image from 'next/image';
 import Link from "next/link";
@@ -11,12 +13,11 @@ interface AccountProp {
     branchCode: string,
     accountNumber: string,
     digit: string,
-    balance: number,
+    balance?: number,
     id: string
 }
 
 export function Account({ compeCode, branchCode, accountNumber, digit, balance, id }: AccountProp) {
-
     return (
         <Box style={{ border: 'solid black 1px', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             {showContent({ compeCode, branchCode, accountNumber, digit, balance, id })}
@@ -25,6 +26,8 @@ export function Account({ compeCode, branchCode, accountNumber, digit, balance, 
 }
 
 function showContent({ compeCode, branchCode, accountNumber, digit, balance, id }: AccountProp) {
+    balance = balance ? balance : 0.00;
+    const instituition = Instituition.findByCompeCode(compeCode)?.brandName || 'Unknow';
     return (
         <>
             <Image src={ImagesArguments.banks.src + compeCode + '.png'} alt={ImagesArguments.banks.alt + compeCode} width={"50"} height={'50'} />
@@ -34,11 +37,11 @@ function showContent({ compeCode, branchCode, accountNumber, digit, balance, id 
                 </Typography>
                 <Typography>
                     <Link href={Routes.ACCOUNTS.EDIT.href(id)} >
-                        <span>Caixa Economica Federeal {/*TODO via compeCode*/}</span>
+                        <span>{instituition}</span>
                     </Link>
                 </Typography>
                 <Typography>
-                    R$ {balance.toPrecision(2)}
+                    {monetaryValue(balance)}
                 </Typography>
             </Card>
         </>

@@ -24,7 +24,7 @@ export async function authenticaitionBacen(req: AccountDto): Promise<string> {
             client_info: {
                 client_id: document,
                 compe_code: compeCode,
-                accout_id: accountId
+                account_id: accountId
             },
             receptor_info: {
                 client_id: process.env.OPEN_FINANCE_CLIENT_ID!,

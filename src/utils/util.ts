@@ -14,3 +14,15 @@ export async function throwError(error: Error, clazz: string, method: string): P
     console.error(`CLAZZ: ${clazz} | METHOD: ${method} | ERROR: ${JSON.stringify(error)} MESSAGE: ${error.message}`);
     throw error;
 }
+
+export function monetaryValue(value: number, currency?: string, locale?: string) {
+    locale = locale ? locale : 'pt-BR';
+    currency = currency ? currency : 'R$';
+    const roundedValue = Number(value).toFixed(2);
+    const formattedValue = Number(roundedValue).toLocaleString(locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
+    return `${currency} ${formattedValue}`
+}

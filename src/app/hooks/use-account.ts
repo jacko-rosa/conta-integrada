@@ -1,21 +1,21 @@
-import { AccountDto, BalanceDto } from '@/definitions/account.definition';
-import { PayloadToken } from '@/definitions/util.definition';
+import { AccountDto, AccountSummary } from '@/definitions/account.definition';
 import { useEffect, useState } from 'react';
 import { AccountsWebService } from '../web-services/account/account.web-service';
-import { AuthenticationWebService } from '../web-services/home/authentication.web-service';
 
 export function useAccountSummary() {
-    const [data, setData] = useState<BalanceDto | null>(null);
+    const [data, setData] = useState<AccountSummary | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const token: PayloadToken = AuthenticationWebService.decodeJwt();
-                const document = token.document;
-                const result = await AccountsWebService.getBalance(document);
-                setData(result);
+                const listAccounts = await AccountsWebService.getAccounts();
+                const amount = listAccounts.reduce((sum, accountDto) => sum + (accountDto.amount || 0), 0) || 0;
+                const currency = 'R$';
+                const qntAcounts = listAccounts.length;
+                const sumary = { amount, currency, qntAcounts } as AccountSummary
+                setData(sumary);
             } catch (err) {
                 setError(err as Error);
             } finally {

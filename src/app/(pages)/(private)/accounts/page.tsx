@@ -1,17 +1,16 @@
 'use client'
 
 import { Account } from "@/app/components/account/accout.component";
+import { AccountSummary } from "@/app/components/account/summary/accout-summary.component";
 import { Breadcrumps } from "@/app/components/breadcrumps/breadcrumps";
-import { useAccounts, useAccountSummary } from "@/app/hooks/use-account";
+import { useAccounts, } from "@/app/hooks/use-account";
 import { AccountDto } from "@/definitions/account.definition";
 import { BRAND } from "@/utils/constants";
 import { Routes } from "@/utils/routes";
-import { Button, Card, CircularProgress, Divider, Typography } from "@mui/material";
-import Link from "next/link";
+import { Card, CircularProgress, Divider, Typography } from "@mui/material";
 import { useEffect } from "react";
 
 export default function AccountPage() {
-    const { data: summaryData, loading: summaryLoading, error: summaryError } = useAccountSummary();
     const { data: listAccounts, loading: accountsLoading, error: accountsError } = useAccounts();
 
     useEffect(() => {
@@ -20,26 +19,9 @@ export default function AccountPage() {
 
     return (
         <div>
-            <Breadcrumps crumbs={[]} actual={Routes.ACCOUNTS.MAIN} />
+            <Breadcrumps crumbs={[Routes.DASBOARD.MAIN]} actual={Routes.ACCOUNTS.MAIN} />
 
-            <Card style={{ border: 'solid black 1px', width: '100%' }}>
-                {summaryLoading ? <CircularProgress /> :
-                    summaryError ? <span style={{ color: 'red', margin: '1vh' }}>{summaryError.message}</span> :
-                        <>
-                            <Typography>
-                                {`Balance at ${listAccounts?.length || 0} ${listAccounts?.length === 1 ? 'account' : 'accounts'}`}
-                            </Typography>
-                            <Typography>
-                                R$ {summaryData?.amount?.toFixed(2)}
-                            </Typography>
-                            <Button variant="contained" color="primary" style={{ marginTop: '10px' }} >
-                                <Link href={Routes.ACCOUNTS.REGISTER.href} style={{ color: 'white', textDecoration: 'none' }}>
-                                    Add Account
-                                </Link>
-                            </Button>
-                        </>
-                }
-            </Card>
+            <AccountSummary label={"Add Account"} href={Routes.ACCOUNTS.REGISTER.href} />
 
             <Card>
                 <Typography style={{ margin: '1vh' }}>
@@ -65,9 +47,6 @@ function accountList(listAccounts: AccountDto[] | undefined, accountsLoading: bo
         return <li><span style={{ color: 'red' }}>{accountsError.message}</span></li>;
     }
 
-    console.log('listAccounts', listAccounts);
-
-
     return listAccounts?.map((account, index) => (
         <li key={index}>
             <Account
@@ -75,7 +54,7 @@ function accountList(listAccounts: AccountDto[] | undefined, accountsLoading: bo
                 branchCode={account.branchCode}
                 accountNumber={account.number}
                 digit={account.digit}
-                balance={0}
+                balance={account.amount}
                 id={account.id ?? String(index)}
             />
             <Divider />

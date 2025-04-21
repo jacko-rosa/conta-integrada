@@ -27,18 +27,21 @@ export async function registerAccount(req: AccountDto): Promise<AccountDto> {
     }
 }
 
+async function getBalanceForAcounts(listAccountDto: AccountDto[]) {
+    return await Promise.all(listAccountDto.map(async (account) => {
+        const balance = await getExternalBalance(account);
+        const amount = balance.amount;
+        return { ...account, amount }
+    }));
+}
+
 export async function getAccounts(document: string): Promise<AccountDto[]> {
     const METHOD = 'getAccounts';
     try {
         logInit(CLAZZ, METHOD, { document });
         const listAccountDomain = await getAccountsSql(document);
         const listDto = listAccountDomain.map((account) => AccountMapper.toDto(account));
-        const promisses = listDto.map(async (account) => {
-            const balance = await getExternalBalance(account);
-            account.amount = balance.amount;
-            return account;
-        })
-        const response = await Promise.all(promisses)
+        const response = await getBalanceForAcounts(listDto);
         logEnd(CLAZZ, METHOD, response);
         return response
     } catch (error: unknown) {

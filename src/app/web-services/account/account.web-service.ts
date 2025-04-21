@@ -1,4 +1,4 @@
-import { AccountDto, BalanceDto } from "@/definitions/account.definition";
+import { AccountDto } from "@/definitions/account.definition";
 import { Endpoints } from "@/utils/endpoints";
 import { ApiError } from "next/dist/server/api-utils";
 import { AuthenticationWebService } from "../home/authentication.web-service";
@@ -33,23 +33,6 @@ const getAccounts = async (): Promise<AccountDto[]> => {
   return result;
 }
 
-const getBalance = async (document: string): Promise<BalanceDto> => {
-  // const response = await fetch(Endpoints.accounts.balance.path, {
-  // method: Endpoints.accounts.balance.methods.GET,
-  // body: JSON.stringify(document),
-  // });
-  const response = await fetchBalance(); // TODO remover mock
-  console.log(document); //todo remover mock
-
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.log(errorData); //todo remover mock
-    // throw { status: response.status, message: errorData.message };
-  }
-  return response.json() as Promise<BalanceDto>;
-};
-
 const getCompeCodes = async (): Promise<{ key: string; value: string }[]> => {
   // const response = await fetch(Endpoints.accounts.compeCodes.path, {
   // method: Endpoints.accounts.compeCodes.methods.GET,
@@ -77,23 +60,7 @@ const getCompeCodes = async (): Promise<{ key: string; value: string }[]> => {
 
 }
 
-async function fetchBalance(): Promise<{ ok: boolean; status: number; json: () => Promise<unknown> }> {
-  const amount: BalanceDto = {
-    amount: 1000.00,
-    currency: 'BRL',
-  };
-
-  const success = {
-    ok: true,
-    status: 200,
-    json: async () => amount,
-  } as Response;
-
-  return success;
-} // TODO remover mock
-
 export const AccountsWebService = {
-  getBalance,
   registerAccount,
   getCompeCodes,
   getAccounts
