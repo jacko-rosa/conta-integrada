@@ -27,12 +27,14 @@ export async function registerAccount(req: AccountDto): Promise<AccountDto> {
     }
 }
 
-async function getBalanceForAcounts(listAccountDto: AccountDto[]) {
-    return await Promise.all(listAccountDto.map(async (account) => {
+async function getBalanceForAcounts(listAccountDto: AccountDto[]): Promise<AccountDto[]> {
+    const newListAccounts = listAccountDto.map(async (account): Promise<AccountDto> => {
         const balance = await getExternalBalance(account);
-        const amount = balance.amount;
-        return { ...account, amount }
-    }));
+        const accountUpdate = { ...account };
+        accountUpdate.amount = balance.amount;
+        return accountUpdate
+    });
+    return Promise.all(newListAccounts)
 }
 
 export async function getAccounts(document: string): Promise<AccountDto[]> {

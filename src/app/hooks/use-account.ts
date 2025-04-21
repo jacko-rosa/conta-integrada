@@ -11,7 +11,14 @@ export function useAccountSummary() {
         async function fetchData() {
             try {
                 const listAccounts = await AccountsWebService.getAccounts();
-                const amount = listAccounts.reduce((sum, accountDto) => sum + (accountDto.amount || 0), 0) || 0;
+                const amount = listAccounts
+                    .map(account => account.amount)
+                    .reduce((prev, actual) => {
+                        const prevAmount: number = prev ? prev : 0;
+                        const actualAmount: number = actual ? actual : 0;
+                        const sumAmount: number = prevAmount + actualAmount;
+                        return sumAmount;
+                    })
                 const currency = 'R$';
                 const qntAcounts = listAccounts.length;
                 const sumary = { amount, currency, qntAcounts } as AccountSummary

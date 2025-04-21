@@ -14,12 +14,21 @@ export async function getExternalAccount(req: AccountDto): Promise<AccountDto> {
     try {
         // TODO: Validation
         const tokenBacen = await authenticate(req);
-        const responses = await getExternalAccountApi(req, tokenBacen);
-        // TODO: verificar se conta req existe em conta responses
-        logEnd(CLAZZ, METHOD, { response: responses });
-        return Promise.resolve(responses[0]);
+        const externalAccounts = await getExternalAccountApi(req, tokenBacen);
+        const response = externalAccounts.find(externalAccount =>
+            externalAccount.compeCode === req.compeCode &&
+            externalAccount.branchCode === req.branchCode &&
+            externalAccount.number === req.number &&
+            externalAccount.digit === req.digit
+        );
+        if (!response) {
+            const errorMsg = `Nenhuma conta correspondente: ${JSON.stringify(req)}`;
+            throw Error(errorMsg);
+        }
+        logEnd(CLAZZ, METHOD, response);
+        return response;
     } catch (error: unknown) {
-        return handleError(error, CLAZZ, METHOD)
+        return handleError(error, CLAZZ, METHOD);
     }
 }
 
