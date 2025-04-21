@@ -3,6 +3,7 @@
 import { AccountRegisterForm } from "@/app/components/account/register/account-register.component";
 import { AccountsWebService } from "@/app/web-services/account/account.web-service";
 import { AccountMapper } from "@/mappers/accout.mapper";
+import { BRAND } from "@/utils/constants";
 import { Routes } from "@/utils/routes";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -42,7 +43,7 @@ export default function AccuntRegisterPage() {
         }
     }
 
-    async function handleInputChange(event: HTMLInputElement, label: string) {
+    async function handleInputChange(event: HTMLInputElement) {
         const { name, value } = event;
         setFormValues((prev) => ({ ...prev, [name]: value }));
         // setFormErrors((prev) => ({ ...prev, [name]: '' }));
@@ -52,8 +53,6 @@ export default function AccuntRegisterPage() {
             return updatedErrors;
         });
         setApiError(null);
-        console.log(label); // todo: remove this line
-        
         // const errors = AuthorizationValidation.validateFormSignUp(name, value, label, formErrors);
         // setFormErrors(errors);
     }
@@ -65,6 +64,7 @@ export default function AccuntRegisterPage() {
 
     useEffect(() => {
         setFormValues((prev) => ({ ...prev, 'compeCode': '000' }));
+        document.title = `${BRAND} | ${Routes.ACCOUNTS.REGISTER.label}`;
     }, []);
 
     return (

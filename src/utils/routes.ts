@@ -32,5 +32,12 @@ export const Routes = {
             label: 'Accounts Register',
             href: '/accounts/register'
         }
+    },
+    PAYMENTS: {
+        REGISTER: {
+            label: 'Payment',
+            href: '/payments/register'
+        }
     }
+
 }

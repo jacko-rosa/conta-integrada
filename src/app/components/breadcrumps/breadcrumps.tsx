@@ -9,21 +9,31 @@ export interface Crumb {
 interface BreadcrumpsProps {
     crumbs: Crumb[];
     actual: Crumb;
+    reverse?: boolean
 }
 
-export function Breadcrumps({ crumbs, actual }: BreadcrumpsProps) {
+export function Breadcrumps({ crumbs, actual, reverse = false }: BreadcrumpsProps) {
     return (
-        <Breadcrumbs aria-label="breadcrumb" style={{color: 'var(--foreground)'}}>
-            {listCrumbs(crumbs)}
-            <Typography>{actual.label}</Typography>;
-        </Breadcrumbs>
+        <>
+            {reverse === false ? (
+                <Breadcrumbs aria-label="breadcrumb" style={{ color: 'var(--foreground)' }}>
+                    {listCrumbs(crumbs)}
+                    <Typography>{actual.label}</Typography>
+                </Breadcrumbs>
+            ) : (
+                <Breadcrumbs aria-label="breadcrumb" style={{ color: 'var(--foreground)' }}>
+                    <Typography>{actual.label}</Typography>
+                    {listCrumbs(crumbs)}
+                </Breadcrumbs>
+            )}
+        </>
     );
 }
 
 function listCrumbs(crumbs: Crumb[]) {
     return crumbs.map((crumb, index) => {
         return (
-            <Link key={index} href={String(crumb.href)} style={{textDecoration:'none', color: 'var(--primary-blue)'}} >
+            <Link key={index} href={String(crumb.href)} style={{ textDecoration: 'none', color: 'var(--primary-blue)' }} >
                 {crumb.label}
             </Link>
         );
