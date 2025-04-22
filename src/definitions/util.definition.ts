@@ -11,3 +11,8 @@ export interface PayloadToken {
     lastName: string;
     document: string;
 }
+
+export interface Crumb {
+    label: string;
+    href: string | ((id: string) => string)
+};

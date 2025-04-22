@@ -1,10 +1,10 @@
 'use client'
 
 import { useAccountSummary } from "@/app/hooks/use-account";
+import { Crumb } from "@/definitions/util.definition";
 import { monetaryValue } from "@/utils/util";
 import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import Link from "next/link";
-import { Crumb } from "../../breadcrumps/breadcrumps";
 
 
 export function AccountSummary({ href, label }: Crumb) {

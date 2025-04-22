@@ -14,9 +14,9 @@ export function useAccountSummary() {
                 const amount = listAccounts
                     .map(account => account.amount)
                     .reduce((prev, actual) => {
-                        const prevAmount: number = prev ? prev : 0;
-                        const actualAmount: number = actual ? actual : 0;
-                        const sumAmount: number = prevAmount + actualAmount;
+                        const prevAmount = prev ? prev : 0;
+                        const actualAmount = actual ? actual : 0;
+                        const sumAmount = Number(prevAmount) + Number(actualAmount);
                         return sumAmount;
                     })
                 const currency = 'R$';

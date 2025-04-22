@@ -1,3 +1,4 @@
+
 const POST = 'POST';
 const GET = 'GET';
 
@@ -19,7 +20,13 @@ export const Endpoints = {
             path: '/api/accounts/balance',
             methods: { GET },
         }
-    }
+    },
+    payments: {
+        slip: {
+            path: '/api/payments/slip',
+            methods: { POST }
+        }
+    },
 }
 
 export const ExternalEndpoints = {
@@ -35,4 +42,10 @@ export const ExternalEndpoints = {
             },
         },
     },
+    pix: {
+        payments: {
+            path: `/pix/payments`,
+            methods: { POST }
+        }
+    }
 };

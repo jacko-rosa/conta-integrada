@@ -1,10 +1,6 @@
+import { Crumb } from "@/definitions/util.definition";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
-
-export interface Crumb {
-    label: string;
-    href: string | ((id: string) => string)
-};
 
 interface BreadcrumpsProps {
     crumbs: Crumb[];
