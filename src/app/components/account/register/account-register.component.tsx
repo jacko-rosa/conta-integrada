@@ -3,6 +3,7 @@
 import { AccountsWebService } from '@/app/web-services/account/account.web-service';
 import { Button, MenuItem, Select, TextField } from '@mui/material';
 import React, { FormEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface AccountRegisterFormProps {
     formValues: { [key: string]: string };
@@ -22,6 +23,7 @@ export function AccountRegisterForm({
     disableRegister,
 }: AccountRegisterFormProps) {
     const [compeCodes, setCompeCodes] = useState<{ key: string; value: string; }[]>([]);
+    const router = useRouter();
 
     async function fetchCompeCodes() {
         const response = await AccountsWebService.getCompeCodes();
@@ -96,7 +98,7 @@ export function AccountRegisterForm({
             />
 
             <div style={{ width: '100%', display: 'flex', justifyContent: 'end', gap: '1vw', marginTop: '2vh' }}>
-                <Button type="reset" variant="contained" color="secondary">
+                <Button type="reset" variant="contained" color="secondary" onClick={() => router.back()}>
                     Voltar
                 </Button>
                 <Button type="submit" variant="contained" disabled={disableRegister()} color="primary">
