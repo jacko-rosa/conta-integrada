@@ -3,6 +3,7 @@
 import { verify } from '@/services/autentication/authentication.service';
 import { AUTHORIZATION } from '@/utils/constants';
 import { Routes } from '@/utils/routes';
+import { CircularProgress } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -33,7 +34,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     }, [router]);
 
     if (!isVerified) {
-        return null; // Placeholder enquanto verifica (pode ser um spinner ou outro componente)
+        return <CircularProgress/>;
     }
 
     return <>{children}</>;
