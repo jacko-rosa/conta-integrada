@@ -17,7 +17,12 @@ export function HomeComponent() {
                             <h2>Bem-vindo à Conta Integrada!</h2>
                         </div>
                         <div className={styles.content}>
-                            <p>A solução financeira para simplificar para suas necessidades.</p>
+                            <p><strong>A solução </strong>financeira feita para <strong>simplificar sua vida.</strong></p>
+                            <p>A <b>Conta Integrada</b> vem para agrupar <strong>sua</strong> vida financeira em um só lugar.</p>
+                            <p>Conosco <strong>você</strong> conta com:</p>
+                            <p><b>* Saldo centralizado</b></p>
+                            <p><b>* Transações centralizado</b></p>
+                            <p><b>* Controle da <strong>sua</strong> vida financeira</b></p>
                         </div>
                     </div>
                     <div className={styles.buttons}>
