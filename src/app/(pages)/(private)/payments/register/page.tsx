@@ -59,7 +59,7 @@ export default function PaymentsRegisterPage() {
     };
 
     const hasError = (): boolean => {
-        return !!errors.barcode && !!errors.description
+        return !!errors.barcode || !!errors.description
     }
 
     const handleAdvance = async () => {
@@ -81,7 +81,7 @@ export default function PaymentsRegisterPage() {
 
     return (
         <div>
-            <Breadcrumps crumbs={[Routes.DASBOARD.MAIN]} actual={Routes.PAYMENTS.REGISTER} reverse />
+            <Breadcrumps crumbs={[Routes.DASBOARD.MAIN]} actual={Routes.PAYMENTS.REGISTER} />
             <div>
                 {apiError && <p style={{ color: 'red', margin: '1vh' }}>{apiError}</p>}
                 {isSubmitting && <CircularProgress />}
@@ -125,15 +125,6 @@ export default function PaymentsRegisterPage() {
                         style={{ marginTop: '2vh' }}
                     >
                         Advance
-                    </Button>
-
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        style={{ marginTop: 'v2h' }}
-                        disabled={true}
-                    >
-                        Use barcode reader
                     </Button>
                 </div>
             </div>

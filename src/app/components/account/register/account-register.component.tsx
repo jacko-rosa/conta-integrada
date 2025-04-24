@@ -99,7 +99,7 @@ export function AccountRegisterForm({
 
             <div style={{ width: '100%', display: 'flex', justifyContent: 'end', gap: '1vw', marginTop: '2vh' }}>
                 <Button type="reset" variant="contained" color="secondary" onClick={() => router.back()}>
-                    Voltar
+                    Back
                 </Button>
                 <Button type="submit" variant="contained" disabled={disableRegister()} color="primary">
                     Register
